@@ -1,0 +1,26 @@
+<div
+  class="flex align-content-center justify-content-center flex-wrap"
+  style="height: 90vh"
+>
+  <div class="m-6 text-center">
+    <ng-container *ngIf="!displayRetryBtn; else retryBtnTemplate">
+      <p-progressSpinner
+        styleClass="w-4rem h-4rem"
+        strokeWidth="8"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      ></p-progressSpinner>
+      <p>
+        {{ "app.strings.redirecting" | translate }}
+      </p>
+    </ng-container>
+    <ng-template #retryBtnTemplate>
+      <p-button
+        [label]="'app.actions.retry' | translate"
+        icon="pi pi-sync"
+        class="mr-2"
+        (onClick)="callback()"
+      ></p-button>
+    </ng-template>
+  </div>
+</div>
