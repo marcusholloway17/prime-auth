@@ -1,11 +1,11 @@
-import { Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Inject, Injectable, OnDestroy, OnInit } from "@angular/core";
 import {
   AuthStateType,
   AuthenticatedDataType,
   UserStateType,
   AUTH_CONFIG_PROVIDER,
   AuthConfigType,
-} from '../types';
+} from "../types";
 import {
   BehaviorSubject,
   Subject,
@@ -14,26 +14,26 @@ import {
   switchMap,
   tap,
   throwError,
-} from 'rxjs';
+} from "rxjs";
 import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
-} from '@angular/common/http';
-import { environment } from 'src/environments/environment.development';
-import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { LanguageService } from 'src/app/helpers/language.service';
-import { badRequestErrorType } from '../types';
-import { LoaderService } from 'src/app/blocs/loader/loader.service';
-import { SessionStorageService } from 'src/app/helpers/session-storage.service';
+} from "@angular/common/http";
+import { environment } from "src/environments/environment.development";
+import { Router } from "@angular/router";
+import { MessageService } from "primeng/api";
+import { LanguageService } from "src/app/helpers/language.service";
+import { badRequestErrorType } from "../types";
+import { LoaderService } from "src/app/blocs/loader/loader.service";
+import { SessionStorageService } from "src/app/helpers/session-storage.service";
 import {
   AUTH_SIGN_IN_DATA_CACHE_KEY,
   AUTH_USER_STATE_DATA_CACHE_KEY,
-} from '../constants';
+} from "../constants";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService implements OnDestroy {
   private destroy$ = new Subject<void>();
@@ -98,8 +98,8 @@ export class AuthService implements OnDestroy {
     this.appHost = this.authConfig.appHost;
     this.redirectTo = this.authConfig.redirectTo;
     this.headers = new HttpHeaders()
-      .set('x-client-id', this.authConfig.clientId)
-      .set('x-client-secret', this.authConfig.clientSecret);
+      .set("x-client-id", this.authConfig.clientId)
+      .set("x-client-secret", this.authConfig.clientSecret);
   }
 
   private setAuthState(state: AuthStateType) {
@@ -109,7 +109,7 @@ export class AuthService implements OnDestroy {
   signOut() {
     this.loaderService.load();
     return this.signInState$.pipe(
-      tap((state) => console.log('signinstate', state)),
+      tap((state) => console.log("signinstate", state)),
       filter((state) => state != null),
       switchMap((state) =>
         this.httpClient
@@ -118,7 +118,7 @@ export class AuthService implements OnDestroy {
             {},
             {
               headers: this.headers.set(
-                'Authorization',
+                "Authorization",
                 `Bearer ${state?.authToken as string}`
               ),
             }
@@ -133,10 +133,10 @@ export class AuthService implements OnDestroy {
               this.sessionStorageService.clear();
               this.loaderService.load(false);
               this.messageService.add({
-                severity: 'success',
+                severity: "success",
                 detail: state?.msg,
               });
-              this.router.navigateByUrl('/');
+              this.router.navigateByUrl("/");
             })
           )
       )
@@ -154,7 +154,7 @@ export class AuthService implements OnDestroy {
         this.httpClient
           .put(this.localProfileUrl, data, {
             headers: this.headers.set(
-              'Authorization',
+              "Authorization",
               `Bearer ${state?.authToken as string}`
             ),
           })
@@ -162,8 +162,8 @@ export class AuthService implements OnDestroy {
             catchError((err) => this.handleError(err)),
             tap(() =>
               this.messageService.add({
-                severity: 'success',
-                detail: this.languageService.instant('app.strings.request-ok'),
+                severity: "success",
+                detail: this.languageService.instant("app.strings.request-ok"),
               })
             ),
             switchMap(() => this.getUser(state?.authToken))
@@ -185,7 +185,7 @@ export class AuthService implements OnDestroy {
             },
             {
               headers: this.headers.set(
-                'Authorization',
+                "Authorization",
                 `Bearer ${state?.authToken as string}`
               ),
             }
@@ -206,7 +206,7 @@ export class AuthService implements OnDestroy {
   getUser(authToken: string = this._getSignInState()?.authToken) {
     return this.httpClient
       .get<UserStateType>(this.localProfileUrl, {
-        headers: this.headers.set('Authorization', `Bearer ${authToken}`),
+        headers: this.headers.set("Authorization", `Bearer ${authToken}`),
       })
       .pipe(
         catchError((err) => {
@@ -285,22 +285,18 @@ export class AuthService implements OnDestroy {
     this._userState$.next(state);
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-  }
-
   private handleError(err: HttpErrorResponse) {
     const _error = err.error;
-    if (typeof _error == 'string') {
+    if (typeof _error == "string") {
       this.messageService.add({
-        severity: 'error',
+        severity: "error",
         detail: _error,
       });
     } else if (Array.isArray(_error?.errors) && _error?.errors?.length) {
       this.messageService.addAll(
         _error?.errors?.map((err: badRequestErrorType) => {
           return {
-            severity: 'warn',
+            severity: "warn",
             detail: err?.msg,
             summary: err?.params,
           };
@@ -308,10 +304,18 @@ export class AuthService implements OnDestroy {
       );
     } else {
       this.messageService.add({
-        severity: 'error',
-        detail: this.languageService.instant('sign-in.authorizationError'),
+        severity: "error",
+        detail: this.languageService.instant("sign-in.authorizationError"),
       });
     }
     return throwError(() => err);
+  }
+
+  clearSessionStorage() {
+    this.sessionStorageService.clear();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 }
