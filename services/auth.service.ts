@@ -20,17 +20,16 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from "@angular/common/http";
-import { environment } from "src/environments/environment.development";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
-import { LanguageService } from "src/app/helpers/language.service";
 import { badRequestErrorType } from "../types";
-import { LoaderService } from "src/app/blocs/loader/loader.service";
-import { SessionStorageService } from "src/app/helpers/session-storage.service";
+import { LoaderService } from "../../../helpers/loader/loader.service";
+import { SessionStorageService } from "../../../helpers/session-storage.service";
 import {
   AUTH_SIGN_IN_DATA_CACHE_KEY,
   AUTH_USER_STATE_DATA_CACHE_KEY,
 } from "../constants";
+import { LanguageService } from "../../../helpers/language.service";
 
 @Injectable({
   providedIn: "root",
@@ -39,7 +38,7 @@ export class AuthService implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   // region urls
-  public host = environment.auth.host;
+  public host = '';
   public localSignInUrl = `${this.host}/auth/local/sign-in`;
   public localSignUpUrl = `${this.host}/auth/local/sign-up`;
   public localSignOutUrl = `${this.host}/auth/local/sign-out`;

@@ -6,7 +6,6 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { environment } from 'src/environments/environment.development';
 import { AUTH_SERVICE } from '../types';
 
 @Injectable({

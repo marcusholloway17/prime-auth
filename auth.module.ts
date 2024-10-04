@@ -7,10 +7,11 @@ import { SignOutComponent } from './pages/sign-out/sign-out.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [CallbackComponent, SignOutComponent],
-  imports: [CommonModule, ProgressSpinnerModule, ButtonModule, TranslateModule],
+  imports: [CommonModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {
