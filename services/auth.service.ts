@@ -38,7 +38,7 @@ export class AuthService implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   // region urls
-  public host = '';
+  public host = this.authConfig.apiHost;
   public localSignInUrl = `${this.host}/auth/local/sign-in`;
   public localSignUpUrl = `${this.host}/auth/local/sign-up`;
   public localSignOutUrl = `${this.host}/auth/local/sign-out`;
