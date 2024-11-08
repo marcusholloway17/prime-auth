@@ -8,10 +8,15 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { AuthRoutingModule } from './auth-routing.module';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { UserCreateComponent } from './pages/users/user-create/user-create.component';
+import { UserListComponent } from './pages/users/user-list/user-list.component';
+import { UserEditComponent } from './pages/users/user-edit/user-edit.component';
+import { UserDetailComponent } from './pages/users/user-detail/user-detail.component';
 
 @NgModule({
-  declarations: [CallbackComponent, SignOutComponent],
-  imports: [CommonModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule],
+  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent],
+  imports: [CommonModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {
