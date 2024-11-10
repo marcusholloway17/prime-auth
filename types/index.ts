@@ -29,4 +29,8 @@ export {
   AUTH_SERVICE,
   AuthConfigType,
   AUTH_CONFIG_PROVIDER,
+  RoleType,
+  ScopeType,
+  RoleScopeType,
+  UserApplicationRoleType
 } from './auth';
