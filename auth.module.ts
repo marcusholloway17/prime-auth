@@ -13,10 +13,22 @@ import { UserCreateComponent } from './pages/users/user-create/user-create.compo
 import { UserListComponent } from './pages/users/user-list/user-list.component';
 import { UserEditComponent } from './pages/users/user-edit/user-edit.component';
 import { UserDetailComponent } from './pages/users/user-detail/user-detail.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DividerModule } from 'primeng/divider';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { FormsModule } from '@angular/forms';
+import { SelectModule } from 'primeng/select';
+import { TagModule } from 'primeng/tag';
+import { PaginatorModule } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
-  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent],
-  imports: [CommonModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule],
+  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, InputTextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {
