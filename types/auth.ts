@@ -197,6 +197,44 @@ export type AuthConfigType = {
   redirectTo: string;
 };
 
+export type RoleType = {
+  id: number;
+  label: string;
+  description: string | null;
+  active: boolean;
+  applicationKey: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}
+
+export type ScopeType = {
+  id: number;
+  slug: string;
+  label: string;
+  description: string | null;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}
+
+export type RoleScopeType = {
+  id: number;
+  scopeId: number;
+  roleId: number;
+  Role: RoleType;
+  Scope: ScopeType;
+}
+
+export type UserApplicationRoleType = {
+  userApplicationRoleId: number;
+  userId: string | number;
+  applicationKey: string;
+  User?: UserDataType;
+  Role?: RoleType;
+}
+
 export const AUTH_CONFIG_PROVIDER = new InjectionToken<AuthConfigType>(
   'AUTH CONFIG PROVIDER'
 );
