@@ -1,0 +1,46 @@
+<div class="px-4">
+    <ng-container *ngIf="roleService$.loadingState$ | async as loader_state">
+        <div class="flex justify-content-between align-items-start">
+            <div>
+                <div class="font-medium text-3xl text-900 mb-3">Rôles</div>
+                <div class="text-500 mb-5">Gérer les rôles de cette application</div>
+            </div>
+
+            <div>
+                <p-button label="Rôles" icon="pi pi-plus" [routerLink]="['/auth', 'manage', 'roles']" outlined />
+            </div>
+        </div>
+
+        <p-card>
+            <div class="grid formgrid fluid">
+                <p-message *ngIf="success_alert" [life]="3000" severity="success" class="mb-3 w-full"
+                    (onClose)="success_alert = false">Nouveau rôle ajouté à cette application</p-message>
+                <div class="field mb-4 col-12">
+                    <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
+                    </label>
+                    <input id="label" type="text" pInputText [fluid]="true" required="true" [(ngModel)]="role.label"
+                        variant="filled" autofocus>
+                </div>
+                <div class="field mb-4 col-12 md:col-12">
+                    <label for="description" class="font-medium text-900">Description</label>
+                    <textarea id="description" pInputTextarea rows="5" [autoResize]="true"
+                        [(ngModel)]="role.description" [fluid]="true" variant="filled"></textarea>
+                </div>
+                <div class="field mb-4 col-12 md:col-12" *ngIf="scopeService$.data$ | async as scopes">
+                    <label for="scopes" class="font-medium text-900">Permissions</label>
+                    <p-multiselect inputId="scopes" name="scopeId" [options]="scopes.data" optionLabel="label"
+                        optionValue="id" [filter]="true" filterBy="label" [fluid]="true" [showClear]="true"
+                        [(ngModel)]="role.RoleScopes" placeholder="Sélectionnez une ou des permissions" appendTo="body"
+                        variant="filled">
+                    </p-multiselect>
+                </div>
+
+                <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
+                <div class="col-12">
+                    <button pButton pRipple label="Enregistrer" icon="pi pi-save" type="submit" class="w-auto mt-3"
+                        [disabled]="!role.label" [loading]="loader_state.create" (click)="save($event)"></button>
+                </div>
+            </div>
+        </p-card>
+    </ng-container>
+</div>
