@@ -27,10 +27,10 @@
                         [fluid]="true" [disabled]="true" variant="filled"></textarea>
                 </div>
                 <div class="field mb-4 col-12 md:col-12" *ngIf="scopeService$.data$ | async as scopes">
-                    <label for="scopes" class="font-medium text-900">Permissions</label>
-                    <div class="card flex items-center gap-2 flex-wrap">
-                        <p-chip *ngFor="let scope of role.Scopes" [label]="scope.label" />
-                    </div>
+                    <label for="description" class="font-medium text-900">Permissions</label>
+                    <p-multiselect [options]="scopes.data" [ngModel]="role.Scopes" [disabled]="true" [dataKey]="'id'"
+                        placeholder="Sélectionnez une ou des permissions" optionLabel="label" display="chip"
+                        fluid="true" />
                 </div>
                 <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
                 <div class="col-12">

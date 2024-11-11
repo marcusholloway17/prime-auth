@@ -15,7 +15,6 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public success_alert: boolean = false;
 
-
   constructor(public scopeService$: ScopeService, public roleService$: RoleService, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -68,5 +67,9 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
       },
       reject: () => { },
     });
+  }
+
+  on_scope_select_change(event: any) {
+    console.log('change', event);
   }
 }
