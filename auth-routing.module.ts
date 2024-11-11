@@ -8,6 +8,7 @@ import { UserCreateComponent } from './pages/users/user-create/user-create.compo
 import { UserDetailComponent } from './pages/users/user-detail/user-detail.component';
 import { UserEditComponent } from './pages/users/user-edit/user-edit.component';
 import { AuthGuardService } from './guards/auth.guard';
+import { userApplicationRoleResolver } from './resolvers/user-application-role.resolver';
 
 const routes: Routes = [
     {
@@ -37,12 +38,18 @@ const routes: Routes = [
                 component: UserCreateComponent
             },
             {
-                path: 'user/:user_application_id',
-                component: UserDetailComponent
+                path: 'user/:userApplicationRoleId',
+                component: UserDetailComponent,
+                resolve: {
+                    userApplicationRole: userApplicationRoleResolver
+                }
             },
             {
-                path: 'user/:user_application_id/edit',
-                component: UserEditComponent
+                path: 'user/:userApplicationRoleId/edit',
+                component: UserEditComponent,
+                resolve: {
+                    userApplicationRole: userApplicationRoleResolver
+                }
             },
         ],
         canActivate: [AuthGuardService]
