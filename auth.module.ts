@@ -25,10 +25,11 @@ import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @NgModule({
   declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent],
-  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, InputTextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, InputTextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {
