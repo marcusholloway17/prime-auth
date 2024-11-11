@@ -9,6 +9,11 @@ import { UserDetailComponent } from './pages/users/user-detail/user-detail.compo
 import { UserEditComponent } from './pages/users/user-edit/user-edit.component';
 import { AuthGuardService } from './guards/auth.guard';
 import { userApplicationRoleResolver } from './resolvers/user-application-role.resolver';
+import { RoleListComponent } from './pages/roles/role-list/role-list.component';
+import { RoleCreateComponent } from './pages/roles/role-create/role-create.component';
+import { RoleDetailComponent } from './pages/roles/role-detail/role-detail.component';
+import { RoleEditComponent } from './pages/roles/role-edit/role-edit.component';
+import { RoleResolver } from './resolvers/role.resolver';
 
 const routes: Routes = [
     {
@@ -51,6 +56,29 @@ const routes: Routes = [
                     userApplicationRole: userApplicationRoleResolver
                 }
             },
+            // roles
+            {
+                path: 'roles',
+                component: RoleListComponent
+            },
+            {
+                path: 'roles/create',
+                component: RoleCreateComponent
+            },
+            {
+                path: 'role/:id',
+                component: RoleDetailComponent,
+                resolve: {
+                    role: RoleResolver
+                }
+            },
+            {
+                path: 'role/:id/edit',
+                component: RoleEditComponent,
+                resolve: {
+                    role: RoleResolver
+                }
+            }
         ],
         canActivate: [AuthGuardService]
     }
