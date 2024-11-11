@@ -37,8 +37,8 @@
 
                 <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
                 <div class="col-12">
-                    <button pButton pRipple label="Enregistrer" icon="pi pi-save" type="submit" class="w-auto mt-3"
-                        [disabled]="!role.label" [loading]="loader_state.create" (click)="save($event)"></button>
+                    <p-button label="Enregistrer" icon="pi pi-save" type="submit" class="w-auto mt-3"
+                        [disabled]="!role.label" [loading]="loader_state.create" (click)="save($event)" />
                 </div>
             </div>
         </p-card>
