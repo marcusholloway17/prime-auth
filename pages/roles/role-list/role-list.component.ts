@@ -65,7 +65,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    this.router.navigate(['/', ''])
+    this.router.navigate(['/auth', 'manage', 'roles', 'create'])
   }
 
   refresh() {
