@@ -203,6 +203,8 @@ export type RoleType = {
   description: string | null;
   active: boolean;
   applicationKey: string;
+  RoleScopes?: RoleScopeType[];
+  Scopes: ScopeType[];
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
