@@ -26,9 +26,13 @@ import { TagModule } from 'primeng/tag';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { RoleListComponent } from './pages/roles/role-list/role-list.component';
+import { RoleCreateComponent } from './pages/roles/role-create/role-create.component';
+import { RoleDetailComponent } from './pages/roles/role-detail/role-detail.component';
+import { RoleEditComponent } from './pages/roles/role-edit/role-edit.component';
 
 @NgModule({
-  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent],
+  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent, RoleListComponent, RoleCreateComponent, RoleDetailComponent, RoleEditComponent],
   imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, InputTextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule],
 })
 export class AuthModule {
