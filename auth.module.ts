@@ -31,10 +31,11 @@ import { RoleCreateComponent } from './pages/roles/role-create/role-create.compo
 import { RoleDetailComponent } from './pages/roles/role-detail/role-detail.component';
 import { RoleEditComponent } from './pages/roles/role-edit/role-edit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
   declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent, RoleListComponent, RoleCreateComponent, RoleDetailComponent, RoleEditComponent],
-  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, InputTextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule, MultiSelectModule],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, InputTextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule, MultiSelectModule, MessageModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {
