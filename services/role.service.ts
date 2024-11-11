@@ -15,6 +15,9 @@ export class RoleService extends CrudService<RoleType> {
     this.setQueryParams({
       _query: {
         include: ["Scopes"],
+        order: [
+          ["createdAt", "DESC"]
+        ]
       },
       page: 1,
       pageSize: 50
