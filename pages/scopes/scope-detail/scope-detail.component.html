@@ -1,0 +1,45 @@
+<div class="px-4">
+    <ng-container *ngIf="scopeService$.active_data$ | async as scope">
+        <div class="flex justify-content-between align-items-start">
+            <div>
+                <div class="font-medium text-3xl text-900 mb-3">Rôle</div>
+                <div class="text-500 mb-5">Détails de la permission</div>
+            </div>
+
+            <div>
+                <p-button label="Permissions" icon="pi pi-mars" [routerLink]="['/auth', 'manage', 'scopes']" outlined />
+            </div>
+        </div>
+
+        <p-card>
+            <div class="grid formgrid fluid">
+                <div class="field mb-4 col-12">
+                    <label for="slug" class="font-medium text-900">Slug<span class="required-field">*</span>
+                    </label>
+                    <input id="slug" type="text" pInputText [fluid]="true" required="true" [ngModel]="scope.slug"
+                        variant="filled" [disabled]="true">
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
+                    </label>
+                    <input id="label" type="text" pInputText [fluid]="true" required="true" [ngModel]="scope.label"
+                        variant="filled" [disabled]="true">
+                </div>
+                <div class="field mb-4 col-12 md:col-12">
+                    <label for="description" class="font-medium text-900">Description</label>
+                    <textarea id="description" pInputTextarea rows="5" [autoResize]="true" [ngModel]="scope.description"
+                        [fluid]="true" [disabled]="true" variant="filled"></textarea>
+                </div>
+                <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
+                <div class="col-12">
+                    <div class="flex flex-wrap gap-2 justify-center mt-3">
+                        <p-button label="Supprimer" styleClass="w-auto" icon="pi pi-trash"
+                            (onClick)="delete($event, scope)" severity="danger"></p-button>
+                        <p-button label="Editer" styleClass="w-auto" icon="pi pi-pencil"
+                            (onClick)="edit(scope)"></p-button>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </ng-container>
+</div>
