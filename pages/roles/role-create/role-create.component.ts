@@ -52,9 +52,11 @@ export class RoleCreateComponent implements OnInit, OnDestroy {
         const payload = {
           ...this.role,
           RoleScopes: this.role.RoleScopes?.map(e => { return { scopeId: e } }),
-          _relations: !this.role.RoleScopes?.length ? [] : [
-            "RoleScopes"
-          ]
+          relations: {
+            include: !this.role.RoleScopes?.length ? [] : [
+              "RoleScopes"
+            ]
+          }
         }
 
         console.log('role', payload);
