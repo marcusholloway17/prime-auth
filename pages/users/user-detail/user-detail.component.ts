@@ -44,12 +44,15 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  update(value: Partial<UserApplicationRoleType>) {
-    // todo: only update active field
-    this.userApplicationRole$.update(value.userApplicationRoleId ?? '', {}).pipe(
-      takeUntil(this.destroy$),
+  update_status(active: boolean) {
+    this.userApplicationRole$.active_data$.pipe(
       take(1),
-      switchMap(() => this.userApplicationRole$.refresh_active_data().pipe(takeUntil(this.destroy$), take(1)))
+      switchMap(
+        (user_application_role) =>
+          this.userApplicationRole$.update(user_application_role?.userApplicationRoleId ?? '', { active: active }).pipe(
+            takeUntil(this.destroy$),
+            take(1),
+          ))
     ).subscribe();
   }
 

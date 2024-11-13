@@ -7,7 +7,8 @@
             </div>
 
             <div>
-                <p-button label="Utilisateurs" icon="pi pi-users" [outlined]="true" />
+                <p-button label="Utilisateurs" icon="pi pi-users" [routerLink]="['/auth', 'manage', 'users']"
+                    [outlined]="true" />
             </div>
         </div>
 
@@ -43,8 +44,8 @@
                     </div>
                     <div class="field mb-4 col-12 md:col-12">
                         <label for="active" class="font-medium text-900">Statut</label><br>
-                        <p-toggleswitch inputId="active" name="active" [ngModel]="user_application_role?.User?.active"
-                            [disabled]="true" />
+                        <p-toggleswitch inputId="active" name="active" [(ngModel)]="user_application_role.active"
+                            (ngModelChange)="update_status($event)" />
                     </div>
                 </div>
                 <div class="flex flex-column align-items-center flex-or"
