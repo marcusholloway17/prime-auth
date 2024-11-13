@@ -7,7 +7,7 @@
             </div>
 
             <div>
-                <p-button label="Rôles" icon="pi pi-plus" [routerLink]="['/auth', 'manage', 'roles']" outlined />
+                <p-button label="Rôles" icon="pi pi-mars" [routerLink]="['/auth', 'manage', 'roles']" outlined />
             </div>
         </div>
 
@@ -30,8 +30,8 @@
                     <label for="scopes" class="font-medium text-900">Permissions</label>
                     <p-multiselect inputId="scopes" name="scopeId" [options]="scopes.data" optionLabel="label"
                         optionValue="id" [filter]="true" filterBy="label" [fluid]="true" [showClear]="true"
-                        [(ngModel)]="role.RoleScopes" placeholder="Sélectionnez une ou des permissions" appendTo="body"
-                        variant="filled">
+                        [(ngModel)]="role.RoleScopes" appendTo="body" variant="filled" [scrollHeight]="'300px'"
+                        placeholder="Sélectionnez une ou des permissions">
                     </p-multiselect>
                 </div>
 
