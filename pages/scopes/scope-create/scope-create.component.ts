@@ -15,7 +15,7 @@ export class ScopeCreateComponent implements OnDestroy {
   public success_alert: boolean = false;
 
 
-  constructor(public scopeService$: ScopeService, private confirmationService: ConfirmationService,) { }
+  constructor(public scopeService$: ScopeService, private confirmationService: ConfirmationService) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
