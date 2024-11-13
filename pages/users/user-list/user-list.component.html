@@ -16,7 +16,7 @@
                 <p-table #user_application_role_dt [value]="user_application_role.data" selectionMode="single"
                     [loading]="loader_state.list" [dataKey]="userApplicationRole$.identifier"
                     [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
-                    [globalFilterFields]="['User.email', 'User.username',  'User.phoneNumber', 'User.is2faEnabled', 'User.active', 'Role.label']">
+                    [globalFilterFields]="['User.email', 'User.username',  'User.phoneNumber', 'User.is2faEnabled', 'active', 'Role.label']">
 
                     <!-- caption template -->
                     <ng-template pTemplate="caption">
@@ -93,8 +93,8 @@
                             <td>{{item?.User?.phoneNumber ?? '-'}}</td>
                             <td>{{item?.Role?.label ?? '-'}}</td>
                             <td>
-                                <p-tag [severity]="item?.User?.active ? 'success' : 'danger'"
-                                    [value]="item?.User?.active ? 'actif' : 'inactif'" />
+                                <p-tag [severity]="item?.active ? 'success' : 'danger'"
+                                    [value]="item?.active ? 'actif' : 'inactif'" />
                             </td>
                         </tr>
                     </ng-template>
