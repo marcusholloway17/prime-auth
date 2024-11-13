@@ -14,6 +14,11 @@ import { RoleCreateComponent } from './pages/roles/role-create/role-create.compo
 import { RoleDetailComponent } from './pages/roles/role-detail/role-detail.component';
 import { RoleEditComponent } from './pages/roles/role-edit/role-edit.component';
 import { RoleResolver } from './resolvers/role.resolver';
+import { ScopeEditComponent } from './pages/scopes/scope-edit/scope-edit.component';
+import { ScopeDetailComponent } from './pages/scopes/scope-detail/scope-detail.component';
+import { ScopeCreateComponent } from './pages/scopes/scope-create/scope-create.component';
+import { ScopeListComponent } from './pages/scopes/scope-list/scope-list.component';
+import { ScopeResolver } from './resolvers/scope.resolver';
 
 const routes: Routes = [
     {
@@ -77,6 +82,29 @@ const routes: Routes = [
                 component: RoleEditComponent,
                 resolve: {
                     role: RoleResolver
+                }
+            },
+            // scopes
+            {
+                path: 'scopes',
+                component: ScopeListComponent
+            },
+            {
+                path: 'scopes/create',
+                component: ScopeCreateComponent
+            },
+            {
+                path: 'scope/:id',
+                component: ScopeDetailComponent,
+                resolve: {
+                    role: ScopeResolver
+                }
+            },
+            {
+                path: 'scope/:id/edit',
+                component: ScopeEditComponent,
+                resolve: {
+                    role: ScopeResolver
                 }
             }
         ],
