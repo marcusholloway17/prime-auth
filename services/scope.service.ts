@@ -14,7 +14,9 @@ export class ScopeService extends CrudService<ScopeType> {
     this.set_url(`${authConfig.apiHost}/api/scopes/`);
     this.setQueryParams({
       _query: {
-        include: ["Roles"],
+        order: [
+          ["createdAt", "DESC"]
+        ]
       },
       page: 1,
       pageSize: 50
