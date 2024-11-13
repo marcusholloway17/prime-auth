@@ -30,7 +30,7 @@
                     <label for="description" class="font-medium text-900">Permissions</label>
                     <p-multiselect [options]="scopes.data" [ngModel]="role.Scopes" [dataKey]="'id'"
                         placeholder="Sélectionnez une ou des permissions" optionLabel="label" display="chip"
-                        fluid="true" (ngModelChange)="on_scope_select_change($event)" />
+                        [scrollHeight]="'300px'" fluid="true" (ngModelChange)="on_scope_select_change($event)" />
                 </div>
                 <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
                 <div class="col-12">
