@@ -19,6 +19,7 @@ import { ScopeDetailComponent } from './pages/scopes/scope-detail/scope-detail.c
 import { ScopeCreateComponent } from './pages/scopes/scope-create/scope-create.component';
 import { ScopeListComponent } from './pages/scopes/scope-list/scope-list.component';
 import { ScopeResolver } from './resolvers/scope.resolver';
+import { HasScopeGuardService } from './guards/has-scope.guard';
 
 const routes: Routes = [
     {
@@ -108,7 +109,10 @@ const routes: Routes = [
                 }
             }
         ],
-        canActivate: [AuthGuardService]
+        data: {
+            scopes: ['auth:manage']
+        },
+        canActivate: [AuthGuardService, HasScopeGuardService]
     }
 ];
 

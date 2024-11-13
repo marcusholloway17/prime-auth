@@ -13,45 +13,51 @@
         </div>
 
         <p-card>
-            <div class="flex gap-5 flex-column-reverse md:flex-row">
-                <div class="grid formgrid fluid">
-                    <div class="field mb-4 col-12 md:col-12">
-                        <label for="email" class="font-medium text-900">Email
-                        </label>
-                        <input id="email" type="text" pInputText [fluid]="true" [disabled]="true"
-                            [ngModel]="user_application_role?.User?.email" variant="filled" disabled="true">
-                    </div>
-                    <div class="field mb-4 col-12 md:col-12">
-                        <label for="username" class="font-medium text-900">Identifiant
-                        </label>
-                        <input id="username" type="text" pInputText [fluid]="true" [disabled]="true"
-                            [ngModel]="user_application_role?.User?.username" variant="filled" disabled="true">
-                    </div>
-                    <div class="field mb-4 col-12 md:col-12">
-                        <label for="phoneNumber" class="font-medium text-900">Téléphone
-                        </label>
-                        <input id="phoneNumber" type="text" pInputText [fluid]="true" [disabled]="true"
-                            [ngModel]="user_application_role?.User?.phoneNumber" variant="filled" disabled="true">
-                    </div>
-                    <div class="field mb-4 col-12 md:col-12" *ngIf="roleService$.data$ | async as roles">
-                        <label for="roleId" class="font-medium text-900">Rôle
-                        </label>
-                        <p-select inputId="roleId" [options]="roles.data" optionLabel="label" optionValue="id"
-                            [filter]="true" filterBy="label" [fluid]="true" [showClear]="true"
-                            [ngModel]="user_application_role?.Role?.id" placeholder="Sélectionnez un rôle"
-                            appendTo="body" variant="filled" (ngModelChange)="update_role($event)">
-                        </p-select>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-12">
-                        <label for="active" class="font-medium text-900">Statut</label><br>
-                        <p-toggleswitch inputId="active" name="active" [(ngModel)]="user_application_role.active"
-                            (ngModelChange)="update_status($event)" />
-                    </div>
-                </div>
-                <div class="flex flex-column align-items-center flex-or"
+            <div class="grid">
+                <div [class]="user_application_role?.User?.profilePictureUrl ? 'col-12 xl:col-2' : 'col-12'"
                     *ngIf="user_application_role?.User?.profilePictureUrl as profil_picture">
-                    <span class="font-medium text-900 mb-2">Photo de profil</span>
-                    <img [src]="profil_picture" class="h-10rem w-10rem" style="border-radius: 50%;" />
+                    <div class="flex flex-column align-items-center flex-or"
+                        *ngIf="user_application_role?.User?.profilePictureUrl as profil_picture">
+                        <span class="font-medium text-900 mb-2">Photo de profil</span>
+                        <img [src]="profil_picture" class="h-10rem w-10rem" style="border-radius: 50%;" />
+                    </div>
+
+                </div>
+                <div [class]="user_application_role?.User?.profilePictureUrl ? 'col-12 xl:col-10' : 'col-12'">
+                    <div class="grid formgrid fluid">
+                        <div class="field mb-4 col-12 md:col-12">
+                            <label for="email" class="font-medium text-900">Email
+                            </label>
+                            <input id="email" type="text" pInputText [fluid]="true" [disabled]="true"
+                                [ngModel]="user_application_role?.User?.email" variant="filled" disabled="true">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-12">
+                            <label for="username" class="font-medium text-900">Identifiant
+                            </label>
+                            <input id="username" type="text" pInputText [fluid]="true" [disabled]="true"
+                                [ngModel]="user_application_role?.User?.username" variant="filled" disabled="true">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-12">
+                            <label for="phoneNumber" class="font-medium text-900">Téléphone
+                            </label>
+                            <input id="phoneNumber" type="text" pInputText [fluid]="true" [disabled]="true"
+                                [ngModel]="user_application_role?.User?.phoneNumber" variant="filled" disabled="true">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-12" *ngIf="roleService$.data$ | async as roles">
+                            <label for="roleId" class="font-medium text-900">Rôle
+                            </label>
+                            <p-select inputId="roleId" [options]="roles.data" optionLabel="label" optionValue="id"
+                                [filter]="true" filterBy="label" [fluid]="true" [showClear]="true"
+                                [ngModel]="user_application_role?.Role?.id" placeholder="Sélectionnez un rôle"
+                                appendTo="body" variant="filled" (ngModelChange)="update_role($event)">
+                            </p-select>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-12">
+                            <label for="active" class="font-medium text-900">Statut</label><br>
+                            <p-toggleswitch inputId="active" name="active" [(ngModel)]="user_application_role.active"
+                                (ngModelChange)="update_status($event)" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </p-card>
