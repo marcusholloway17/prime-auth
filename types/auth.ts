@@ -233,6 +233,8 @@ export type UserApplicationRoleType = {
   userApplicationRoleId: number;
   userId: string | number;
   applicationKey: string;
+  active: boolean;
+  at: string;
   User?: UserDataType;
   Role?: RoleType;
 }
