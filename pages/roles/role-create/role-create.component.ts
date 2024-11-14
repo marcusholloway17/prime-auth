@@ -27,7 +27,7 @@ export class RoleCreateComponent implements OnInit, OnDestroy {
   }
 
   load_select_data() {
-    this.scopeService$.list({ page: undefined, pageSize: undefined, _query: {} }).pipe(takeUntil(this.destroy$), take(1)).subscribe();
+    this.scopeService$.list({ page: undefined, pageSize: undefined, _query: { order: [["createdAt", "DESC"]] } }).pipe(takeUntil(this.destroy$), take(1)).subscribe();
   }
 
   save(event: any) {
