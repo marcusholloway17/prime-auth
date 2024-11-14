@@ -216,6 +216,7 @@ export type ScopeType = {
   label: string;
   description: string | null;
   active: boolean;
+  RoleScope: RoleScopeType;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
