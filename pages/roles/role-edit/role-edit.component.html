@@ -26,11 +26,36 @@
                     <textarea id="description" pInputTextarea rows="5" [autoResize]="true"
                         [(ngModel)]="role.description" [fluid]="true" variant="filled"></textarea>
                 </div>
-                <div class="field mb-4 col-12 md:col-12" *ngIf="scopeService$.data$ | async as scopes">
-                    <label for="description" class="font-medium text-900">Permissions</label>
-                    <p-multiselect [options]="scopes.data" [ngModel]="role.Scopes" [dataKey]="'id'"
-                        placeholder="Sélectionnez une ou des permissions" optionLabel="label" display="chip"
-                        [scrollHeight]="'300px'" fluid="true" (ngModelChange)="on_scope_select_change($event)" />
+                <div class="field mb-4 col-12 md:col-12">
+                    <div class="field mb-4 col-12 md:col-12">
+                        <label for="description" class="font-medium text-900">Permissions</label>
+                        <div class="card flex items-center gap-2 flex-wrap">
+                            <p-chip *ngFor="let scope of role?.Scopes" [label]="scope?.label" [removable]="true"
+                                (onRemove)="on_scope_removed(scope)" />
+                            <p-chip label="Ajouter" icon="pi pi-plus" class="cursor-pointer"
+                                (click)="toggle_popover($event, role.Scopes ?? [])" />
+                            <p-popover #op (onHide)="selected_scopes = []">
+                                <!-- <div class="flex flex-col gap-4 w-[25rem]">
+                                    
+                                </div> -->
+                                <div class="grid formgrid fluid">
+                                    <div class="field mb-4 col-12 md:col-12">
+                                        <label for="scopes" class="font-medium text-900">Permissions</label>
+                                        <p-multiselect inputId="scopes" name="scopeId" [options]="available_scopes"
+                                            optionLabel="label" [filter]="true" filterBy="label" [fluid]="true"
+                                            [showClear]="true" [(ngModel)]="selected_scopes" appendTo="body"
+                                            variant="filled" [scrollHeight]="'300px'"
+                                            placeholder="Sélectionnez une ou des permissions">
+                                        </p-multiselect>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="selected_scopes as selected">
+                                    <p-button label="Ajouter" styleClass="w-full" (onClick)="on_scope_added()"
+                                        [disabled]="!selected?.length"></p-button>
+                                </ng-container>
+                            </p-popover>
+                        </div>
+                    </div>
                 </div>
                 <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
                 <div class="col-12">
