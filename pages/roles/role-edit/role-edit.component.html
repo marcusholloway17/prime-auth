@@ -19,12 +19,12 @@
                     <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
                     </label>
                     <input id="label" type="text" pInputText [fluid]="true" required="true" [(ngModel)]="role.label"
-                        variant="filled" autofocus>
+                        autofocus>
                 </div>
                 <div class="field mb-4 col-12 md:col-12">
                     <label for="description" class="font-medium text-900">Description</label>
                     <textarea id="description" pInputTextarea rows="5" [autoResize]="true"
-                        [(ngModel)]="role.description" [fluid]="true" variant="filled"></textarea>
+                        [(ngModel)]="role.description" [fluid]="true"></textarea>
                 </div>
                 <div class="field mb-4 col-12 md:col-12">
                     <div class="field mb-4 col-12 md:col-12">
@@ -44,8 +44,7 @@
                                         <p-multiselect inputId="scopes" name="scopeId" [options]="available_scopes"
                                             optionLabel="label" [filter]="true" filterBy="label" [fluid]="true"
                                             [showClear]="true" [(ngModel)]="selected_scopes" appendTo="body"
-                                            variant="filled" [scrollHeight]="'300px'"
-                                            placeholder="Sélectionnez une ou des permissions">
+                                            [scrollHeight]="'300px'" placeholder="Sélectionnez une ou des permissions">
                                         </p-multiselect>
                                     </div>
                                 </div>

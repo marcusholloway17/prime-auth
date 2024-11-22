@@ -29,19 +29,19 @@
                             <label for="email" class="font-medium text-900">Email
                             </label>
                             <input id="email" type="text" pInputText [fluid]="true" [disabled]="true"
-                                [ngModel]="user_application_role?.User?.email" variant="filled" disabled="true">
+                                [ngModel]="user_application_role?.User?.email" disabled="true">
                         </div>
                         <div class="field mb-4 col-12 md:col-12">
                             <label for="username" class="font-medium text-900">Identifiant
                             </label>
                             <input id="username" type="text" pInputText [fluid]="true" [disabled]="true"
-                                [ngModel]="user_application_role?.User?.username" variant="filled" disabled="true">
+                                [ngModel]="user_application_role?.User?.username" disabled="true">
                         </div>
                         <div class="field mb-4 col-12 md:col-12">
                             <label for="phoneNumber" class="font-medium text-900">Téléphone
                             </label>
                             <input id="phoneNumber" type="text" pInputText [fluid]="true" [disabled]="true"
-                                [ngModel]="user_application_role?.User?.phoneNumber" variant="filled" disabled="true">
+                                [ngModel]="user_application_role?.User?.phoneNumber" disabled="true">
                         </div>
                         <div class="field mb-4 col-12 md:col-12" *ngIf="roleService$.data$ | async as roles">
                             <label for="roleId" class="font-medium text-900">Rôle
@@ -49,7 +49,7 @@
                             <p-select inputId="roleId" [options]="roles.data" optionLabel="label" optionValue="id"
                                 [filter]="true" filterBy="label" [fluid]="true" [showClear]="true"
                                 [ngModel]="user_application_role?.Role?.id" placeholder="Sélectionnez un rôle"
-                                appendTo="body" variant="filled" (ngModelChange)="update_role($event)">
+                                appendTo="body" (ngModelChange)="update_role($event)">
                             </p-select>
                         </div>
                         <div class="field mb-4 col-12 md:col-12">

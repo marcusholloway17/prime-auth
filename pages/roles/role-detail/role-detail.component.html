@@ -17,12 +17,12 @@
                     <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
                     </label>
                     <input id="label" type="text" pInputText [fluid]="true" required="true" [ngModel]="role.label"
-                        variant="filled" [disabled]="true" autofocus>
+                        [disabled]="true" autofocus>
                 </div>
                 <div class="field mb-4 col-12 md:col-12">
                     <label for="description" class="font-medium text-900">Description</label>
                     <textarea id="description" pInputTextarea rows="5" [autoResize]="true" [ngModel]="role.description"
-                        [fluid]="true" [disabled]="true" variant="filled"></textarea>
+                        [fluid]="true" [disabled]="true"></textarea>
                 </div>
                 <div class="field mb-4 col-12 md:col-12">
                     <label for="description" class="font-medium text-900">Permissions</label>
