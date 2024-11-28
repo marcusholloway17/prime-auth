@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { AUTH_SERVICE } from '../../types';
-import { Subject, catchError, takeUntil, throwError } from 'rxjs';
+import { Subject, catchError, take, takeUntil, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class SignOutComponent {
   private destroy$ = new Subject<void>();
   public displayRetryBtn: boolean = false;
 
-  constructor(@Inject(AUTH_SERVICE) private authService: AuthService) {}
+  constructor(@Inject(AUTH_SERVICE) private authService: AuthService) { }
 
   ngOnInit(): void {
     this.signOut();
@@ -24,6 +24,7 @@ export class SignOutComponent {
       .signOut()
       .pipe(
         takeUntil(this.destroy$),
+        take(1),
         catchError((err) => {
           this.displayRetryBtn = true;
           return throwError(() => err);

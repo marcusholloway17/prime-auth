@@ -12,6 +12,7 @@ import {
   catchError,
   filter,
   switchMap,
+  take,
   tap,
   throwError,
 } from "rxjs";
@@ -108,8 +109,9 @@ export class AuthService implements OnDestroy {
   signOut() {
     this.loaderService.load();
     return this.signInState$.pipe(
-      tap((state) => console.log("signinstate", state)),
+      // tap((state) => console.log("signinstate", state)),
       filter((state) => state != null),
+      take(1),
       switchMap((state) =>
         this.httpClient
           .post(
@@ -123,6 +125,7 @@ export class AuthService implements OnDestroy {
             }
           )
           .pipe(
+            take(1),
             catchError((err) => {
               this.loaderService.load(false);
               return this.handleError(err);
