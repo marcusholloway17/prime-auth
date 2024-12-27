@@ -23,8 +23,8 @@
                 </div>
                 <div class="field mb-4 col-12 md:col-12">
                     <label for="description" class="font-medium text-900">Description</label>
-                    <textarea id="description" pInputTextarea rows="5" [autoResize]="true"
-                        [(ngModel)]="role.description" [fluid]="true"></textarea>
+                    <textarea id="description" pTextarea rows="5" [autoResize]="true" [(ngModel)]="role.description"
+                        [fluid]="true"></textarea>
                 </div>
                 <div class="field mb-4 col-12 md:col-12" *ngIf="scopeService$.data$ | async as scopes">
                     <label for="scopes" class="font-medium text-900">Permissions</label>
