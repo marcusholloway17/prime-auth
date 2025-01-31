@@ -268,13 +268,22 @@ export class AuthService implements OnDestroy {
       return false;
     }
   }
-
   // get user scopes
   getScopes() {
-    return this._signInState$.getValue()?.scopes ?? [];
+    const signInState = this.sessionStorageService.parse(
+      this.sessionStorageService.getItem(AUTH_SIGN_IN_DATA_CACHE_KEY)
+    );
+
+    return signInState && signInState?.authToken && Array.isArray(signInState?.scopes) ? signInState?.scopes : [];
   }
   hasScopes(scopes: string[]) {
-    return this.getScopes().some((scope) => scopes.includes(scope));
+    for (const incomming_scope of scopes) {
+      if (this.getScopes().includes(incomming_scope)) {
+        return true;
+      }
+    }
+    return false;
+    // return this.getScopes().some((scope) => scopes.includes(scope));
   }
 
   private setSignInState(state: AuthenticatedDataType) {
