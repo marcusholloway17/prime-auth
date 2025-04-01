@@ -3,6 +3,7 @@ import { Subject, take, takeUntil, tap } from 'rxjs';
 import { UserApplicationRoleService } from '../../../services/user-application-role.service';
 import { MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-user-list',
@@ -32,7 +33,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(
     public userApplicationRole$: UserApplicationRoleService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public authService$: AuthService
   ) { }
 
   ngOnInit(): void {
