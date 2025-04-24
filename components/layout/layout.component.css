@@ -1,0 +1,11 @@
+/* Version optimisée avec regroupement des breakpoints identiques */
+.layout-container {
+  width: 90vw;
+}
+
+@media (min-width: 1025px) {
+  /* Styles pour grands écrans (tablettes paysage, ordinateurs portables et de bureau) */
+  .layout-container {
+    width: 85vw;
+  }
+}

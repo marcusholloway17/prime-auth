@@ -1,84 +1,77 @@
 <div class="px-4">
-    <ng-container *ngIf="scopeService$.loadingState$| async as loader_state">
-        <div class="flex justify-content-between align-items-start">
-            <div>
-                <div class="font-medium text-3xl text-900 mb-3">Permissions</div>
-                <div class="text-500 mb-5">Gérer les permissions de cette application</div>
+  <ng-container *ngIf="scopeService$.loadingState$| async as loader_state">
+    <div class="flex justify-content-between align-items-start">
+      <div>
+        <div class="font-medium text-3xl text-900 mb-3">Permissions</div>
+        <div class="text-500 mb-5">Gérer les permissions de cette application</div>
+      </div>
+
+      <p-button label="Nouveau" icon="pi pi-plus" [routerLink]="['/auth', 'manage', 'scopes', 'create']"></p-button>
+    </div>
+
+    <p-card>
+      <ng-container *ngIf="scopeService$.data$ | async as scope">
+        <p-table #scope_dt [value]="scope.data" selectionMode="single" [loading]="loader_state.list"
+          [dataKey]="scopeService$.identifier" [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
+          [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollDirection]="'both'"
+          [scrollHeight]="'65vh'" stateKey="scopes" stateStorage="session">
+
+          <!-- caption template -->
+          <ng-template pTemplate="caption">
+            <p-inputgroup styleClass="mb-3">
+              <input pInputText [(ngModel)]="dt_search_value" placeholder="Rechercher..."
+                (input)="scope_dt.filterGlobal(dt_search_value, 'contains')" />
+              <p-inputgroup-addon>
+                <p-button icon="pi pi-filter-slash" text severity="secondary"
+                  (onClick)="scope_dt.clear(); dt_search_value = '';" size="large" />
+              </p-inputgroup-addon>
+            </p-inputgroup>
+          </ng-template>
+
+
+          <!-- header template -->
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'id' | uppercase }}
+                  <p-columnFilter type="text" field="User.email" display="menu" matchMode="contains" />
+                </div>
+              </th>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'Libellé' | uppercase }}
+                  <p-columnFilter type="text" field="User.username" display="menu" matchMode="contains" />
+                </div>
+              </th>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'Slug' | uppercase }}
+                  <p-columnFilter type="text" field="User.username" display="menu" matchMode="contains" />
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <!-- body template -->
+          <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr [pSelectableRow]="item">
+              <td>{{item?.id}}</td>
+              <td>{{item?.label}}</td>
+              <td>{{item?.slug}}</td>
+            </tr>
+          </ng-template>
+
+          <!-- summary template -->
+          <ng-template pTemplate="summary">
+            <div class="felx justify-content-center">
+              <p-paginator (onPageChange)="onPageChange($event)" [rows]="scopeService$.queryParams.pageSize"
+                [totalRecords]="scope.total">
+              </p-paginator>
             </div>
-
-            <div>
-                <p-splitbutton label="Nouveau" icon="pi pi-plus" [model]="actions_menu" (onClick)="create()" outlined />
-            </div>
-        </div>
-
-        <p-card>
-            <ng-container *ngIf="scopeService$.data$ | async as scope">
-                <p-table #scope_dt [value]="scope.data" selectionMode="single" [loading]="loader_state.list"
-                    [dataKey]="scopeService$.identifier" [tableStyle]="{'min-width': '50rem'}"
-                    (onRowSelect)="detail($event)" [globalFilterFields]="['id', 'label', 'active']">
-
-                    <!-- caption template -->
-                    <ng-template pTemplate="caption">
-                        <div class="flex justify-content-between mb-3">
-                            <p-button label="Supprimer le filtre" [outlined]="true" icon="pi pi-filter-slash"
-                                (onClick)="scope_dt?.clear()" />
-                            <p-iconfield iconPosition="left" class="ml-auto">
-                                <p-inputicon>
-                                    <i class="pi pi-search"></i>
-                                </p-inputicon>
-                                <input pInputText type="text" [(ngModel)]="dt_search_value"
-                                    (input)="scope_dt?.filterGlobal(dt_search_value, 'contains')"
-                                    placeholder="Rechercher" />
-                            </p-iconfield>
-                        </div>
-                    </ng-template>
-
-                    <!-- header template -->
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'id' | uppercase }}
-                                    <p-columnFilter type="text" field="User.email" display="menu"
-                                        matchMode="contains" />
-                                </div>
-                            </th>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'Libellé' | uppercase }}
-                                    <p-columnFilter type="text" field="User.username" display="menu"
-                                        matchMode="contains" />
-                                </div>
-                            </th>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'Slug' | uppercase }}
-                                    <p-columnFilter type="text" field="User.username" display="menu"
-                                        matchMode="contains" />
-                                </div>
-                            </th>
-                        </tr>
-                    </ng-template>
-
-                    <!-- body template -->
-                    <ng-template pTemplate="body" let-item let-index="rowIndex">
-                        <tr [pSelectableRow]="item">
-                            <td>{{item?.id}}</td>
-                            <td>{{item?.label}}</td>
-                            <td>{{item?.slug}}</td>
-                        </tr>
-                    </ng-template>
-
-                    <!-- summary template -->
-                    <ng-template pTemplate="summary">
-                        <div class="felx justify-content-center">
-                            <p-paginator (onPageChange)="onPageChange($event)"
-                                [rows]="scopeService$.queryParams.pageSize" [totalRecords]="scope.total">
-                            </p-paginator>
-                        </div>
-                    </ng-template>
-                </p-table>
-            </ng-container>
-        </p-card>
-    </ng-container>
+          </ng-template>
+        </p-table>
+      </ng-container>
+    </p-card>
+  </ng-container>
 </div>

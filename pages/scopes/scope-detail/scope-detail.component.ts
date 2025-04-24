@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Subject, take, takeUntil, tap } from 'rxjs';
 import { ScopeService } from '../../../services/scope.service';
 import { ScopeType } from '../../../types';
@@ -13,6 +13,14 @@ import { ScopeType } from '../../../types';
 export class ScopeDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public success_alert: boolean = false;
+  public items: MenuItem[] = [
+    {
+      label: "Supprimer",
+      command: (event) => {
+        this.delete(event as Event);
+      }
+    }
+  ]
 
   constructor(public scopeService$: ScopeService, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
@@ -28,7 +36,7 @@ export class ScopeDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/auth', 'manage', 'scope', scope.id, 'edit']);
   }
 
-  delete(event: Event, scope: ScopeType) {
+  delete(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Voulez-vous supprimer cet enregistrement ?',
@@ -46,7 +54,7 @@ export class ScopeDetailComponent implements OnInit, OnDestroy {
       },
 
       accept: () => {
-        this.scopeService$.delete(scope.id)
+        this.scopeService$.delete_active()
           .pipe(
             takeUntil(this.destroy$),
             take(1),

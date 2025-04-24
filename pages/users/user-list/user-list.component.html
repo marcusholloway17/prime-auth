@@ -21,18 +21,14 @@
 
           <!-- caption template -->
           <ng-template pTemplate="caption">
-            <div class="flex justify-content-between mb-3">
-              <p-button label="Supprimer le filtre" [outlined]="true" icon="pi pi-filter-slash"
-                (onClick)="user_application_role_dt?.clear()" />
-              <p-iconfield iconPosition="left" class="ml-auto">
-                <p-inputicon>
-                  <i class="pi pi-search"></i>
-                </p-inputicon>
-                <input pInputText type="text" [(ngModel)]="dt_search_value"
-                  (input)="user_application_role_dt?.filterGlobal(dt_search_value, 'contains')"
-                  placeholder="Rechercher" />
-              </p-iconfield>
-            </div>
+            <p-inputgroup styleClass="mb-3">
+              <input pInputText [(ngModel)]="dt_search_value" placeholder="Rechercher..."
+                (input)="user_application_role_dt.filterGlobal(dt_search_value, 'contains')" />
+              <p-inputgroup-addon>
+                <p-button icon="pi pi-filter-slash" text severity="secondary"
+                  (onClick)="user_application_role_dt.clear(); dt_search_value = '';" size="large" />
+              </p-inputgroup-addon>
+            </p-inputgroup>
           </ng-template>
 
           <!-- header template -->

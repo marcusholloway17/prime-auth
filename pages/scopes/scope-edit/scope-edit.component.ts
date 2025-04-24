@@ -3,6 +3,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Subject, takeUntil, tap, take, switchMap } from 'rxjs';
 import { ScopeService } from '../../../services/scope.service';
 import { ScopeType } from '../../../types';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-scope-edit',
@@ -15,7 +16,11 @@ export class ScopeEditComponent implements OnDestroy, OnInit {
   public success_alert: boolean = false;
 
 
-  constructor(public scopeService$: ScopeService, private confirmationService: ConfirmationService) { }
+  constructor(
+    public scopeService$: ScopeService,
+    private confirmationService: ConfirmationService,
+    public route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.scopeService$.active_data$.pipe(tap(state => { if (state) { this.scope = state } }), takeUntil(this.destroy$)).subscribe();

@@ -1,39 +1,23 @@
-<div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
-    <div class="p-fluid flex flex-column lg:flex-row">
-        <ul
-            class="list-none m-0 p-0 flex flex-row lg:flex-column justify-content-evenly md:justify-content-between lg:justify-content-start mb-5 lg:pr-8 lg:mb-0">
-            <li [routerLink]="['users']" routerLinkActive="surface-500">
-                <a pRipple
-                    class="flex align-items-center cursor-pointer p-3 border-round text-800 hover:surface-hover transition-duration-150 transition-colors">
-                    <i class="pi pi-user md:mr-2"></i>
-                    <span class="font-medium hidden md:block">Utilisateurs</span>
-                </a>
-            </li>
-            <li [routerLink]="['roles']" routerLinkActive="surface-hover">
-                <a pRipple
-                    class="flex align-items-center cursor-pointer p-3 border-round text-800 hover:surface-hover transition-duration-150 transition-colors">
-                    <i class="pi pi-mars md:mr-2"></i>
-                    <span class="font-medium hidden md:block">Rôles</span>
-                </a>
-            </li>
-            <li [routerLink]="['scopes']" routerLinkActive="surface-hover">
-                <a pRipple
-                    class="flex align-items-center cursor-pointer p-3 border-round text-800 hover:surface-hover transition-duration-150 transition-colors">
-                    <i class="pi pi-key md:mr-2"></i>
-                    <span class="font-medium hidden md:block">Permissions</span>
-                </a>
-            </li>
-            <!-- back to app -->
-            <li [routerLink]="['/']">
-                <a pRipple
-                    class="flex align-items-center cursor-pointer p-3 lg:mt-5 border-round text-800 hover:surface-hover transition-duration-150 transition-colors">
-                    <i class="pi pi-arrow-left md:mr-2"></i>
-                    <span class="font-medium hidden md:block">Retour à l'application</span>
-                </a>
-            </li>
-        </ul>
-        <div class="px-5 flex-auto">
-            <router-outlet></router-outlet>
-        </div>
+<p-menu #menu [model]="profilMenu" [popup]="true" />
+
+<p-menubar [model]="menuBar" [autoDisplay]="true" [autoHide]="true" [style]="{'border': 'none'}">
+  <ng-template #start>
+    <div class="flex align-items-center px-5 flex-shrink-0 cursor-pointer" style="height:60px" [routerLink]="['/']">
+      <img src="lepatio-logo-2.png" alt="Image" height="40">
     </div>
+  </ng-template>
+  <ng-template #end>
+    <div class="flex items-center gap-2">
+      <p-avatar size="large" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"
+        (click)="menu?.toggle($event)" />
+    </div>
+  </ng-template>
+</p-menubar>
+
+<div class="px-2 md:px-3 flex justify-content-around">
+  <div class="layout-container px-3">
+    <div class="p-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

@@ -4,7 +4,7 @@ import { ScopeService } from '../../../services/scope.service';
 import { RoleService } from '../../../services/role.service';
 import { RoleType, ScopeType } from '../../../types';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-role-detail',
@@ -14,6 +14,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class RoleDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public success_alert: boolean = false;
+
+  public items: MenuItem[] = [
+    {
+      label: 'Supprimer',
+      command: (event) => {
+        this.delete(event as Event)
+      },
+    }
+  ]
 
   constructor(public scopeService$: ScopeService, public roleService$: RoleService, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
@@ -34,7 +43,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/auth', 'manage', 'role', role.id, 'edit']);
   }
 
-  delete(event: Event, role: RoleType) {
+  delete(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Voulez-vous supprimer cet enregistrement ?',
@@ -52,7 +61,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
       },
 
       accept: () => {
-        this.roleService$.delete(role.id)
+        this.roleService$.delete_active()
           .pipe(
             takeUntil(this.destroy$),
             take(1),

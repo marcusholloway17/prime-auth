@@ -64,10 +64,6 @@ export class ScopeListComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  create() {
-    this.router.navigate(['/auth', 'manage', 'scopes', 'create'])
-  }
-
   refresh() {
     this.scopeService$.list().pipe(
       takeUntil(this.destroy$),

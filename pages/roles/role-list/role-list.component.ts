@@ -64,10 +64,6 @@ export class RoleListComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  create() {
-    this.router.navigate(['/auth', 'manage', 'roles', 'create'])
-  }
-
   refresh() {
     this.roleService$.list().pipe(
       takeUntil(this.destroy$),

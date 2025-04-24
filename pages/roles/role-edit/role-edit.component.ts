@@ -6,6 +6,7 @@ import { RoleService } from '../../../services/role.service';
 import { ConfirmationService } from 'primeng/api';
 import { RoleScopeService } from '../../../services/role-scope.service';
 import { Popover } from 'primeng/popover';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-role-edit',
@@ -28,6 +29,7 @@ export class RoleEditComponent {
     public roleService$: RoleService,
     private roleScopeService$: RoleScopeService,
     private confirmationService: ConfirmationService,
+    public route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {

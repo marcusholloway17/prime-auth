@@ -1,45 +1,38 @@
 <div class="px-4">
-    <ng-container *ngIf="roleService$.active_data$ | async as role">
-        <div class="flex justify-content-between align-items-start">
-            <div>
-                <div class="font-medium text-3xl text-900 mb-3">Rôle</div>
-                <div class="text-500 mb-5">Détails du rôle</div>
-            </div>
-
-            <div>
-                <p-button label="Rôles" icon="pi pi-mars" [routerLink]="['/auth', 'manage', 'roles']" outlined />
-            </div>
+  <ng-container *ngIf="roleService$.active_data$ | async as role">
+    <div class="flex lg:justify-content-between">
+      <div>
+        <div class="flex">
+          <p-button icon="pi pi-arrow-left" styleClass="mr-2" link [routerLink]="['/auth', 'manage', 'roles']" link />
+          <div class="font-medium text-3xl text-900 mb-3">Rôle</div>
         </div>
+        <div class="text-500 mb-5">Détails du rôle</div>
+      </div>
 
-        <p-card>
-            <div class="grid formgrid fluid">
-                <div class="field mb-4 col-12">
-                    <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
-                    </label>
-                    <input id="label" type="text" pInputText [fluid]="true" required="true" [ngModel]="role.label"
-                        [disabled]="true" autofocus>
-                </div>
-                <div class="field mb-4 col-12 md:col-12">
-                    <label for="description" class="font-medium text-900">Description</label>
-                    <textarea id="description" pTextarea rows="5" [autoResize]="true" [ngModel]="role.description"
-                        [fluid]="true" [disabled]="true"></textarea>
-                </div>
-                <div class="field mb-4 col-12 md:col-12">
-                    <label for="description" class="font-medium text-900">Permissions</label>
-                    <div class="card flex items-center gap-2 flex-wrap">
-                        <p-chip *ngFor="let scope of role?.Scopes" [label]="scope?.label" />
-                    </div>
-                </div>
-                <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
-                <div class="col-12">
-                    <div class="flex flex-wrap gap-2 justify-center mt-3">
-                        <p-button label="Supprimer" styleClass="w-auto" icon="pi pi-trash"
-                            (onClick)="delete($event, role)" severity="danger"></p-button>
-                        <p-button label="Editer" styleClass="w-auto" icon="pi pi-pencil"
-                            (onClick)="edit(role)"></p-button>
-                    </div>
-                </div>
-            </div>
-        </p-card>
-    </ng-container>
+      <p-splitbutton label="Éditer" (onClick)="edit(role)" [model]="items" />
+    </div>
+
+
+    <p-card>
+      <div class="grid formgrid fluid">
+        <div class="field mb-4 col-12">
+          <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
+          </label>
+          <input id="label" type="text" pInputText [fluid]="true" required="true" [ngModel]="role.label"
+            [disabled]="true" autofocus>
+        </div>
+        <div class="field mb-4 col-12 md:col-12">
+          <label for="description" class="font-medium text-900">Description</label>
+          <textarea id="description" pTextarea rows="5" [autoResize]="true" [ngModel]="role.description" [fluid]="true"
+            [disabled]="true"></textarea>
+        </div>
+        <div class="field col-12 md:col-12">
+          <label for="description" class="font-medium text-900">Permissions</label>
+          <div class="card flex items-center gap-2 flex-wrap">
+            <p-chip *ngFor="let scope of role?.Scopes" [label]="scope?.label" />
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </ng-container>
 </div>

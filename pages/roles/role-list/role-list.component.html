@@ -1,103 +1,93 @@
 <div class="px-4">
-    <ng-container *ngIf="roleService$.loadingState$| async as loader_state">
-        <div class="flex justify-content-between align-items-start">
-            <div>
-                <div class="font-medium text-3xl text-900 mb-3">Rôles</div>
-                <div class="text-500 mb-5">Gérer les rôles de cette application</div>
+  <ng-container *ngIf="roleService$.loadingState$| async as loader_state">
+    <div class="flex justify-content-between align-items-start">
+      <div>
+        <div class="font-medium text-3xl text-900 mb-3">Rôles</div>
+        <div class="text-500 mb-5">Gérer les rôles de cette application</div>
+      </div>
+
+      <p-button label="Nouveau" icon="pi pi-plus" [routerLink]="['/auth', 'manage', 'roles', 'create']"></p-button>
+    </div>
+
+    <p-card>
+      <ng-container *ngIf="roleService$.data$ | async as role">
+        <p-table #role_dt [value]="role.data" selectionMode="single" [loading]="loader_state.list"
+          [dataKey]="roleService$.identifier" [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
+          [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollDirection]="'both'"
+          [scrollHeight]="'65vh'" stateKey="roles" stateStorage="session">
+
+          <!-- caption template -->
+          <ng-template pTemplate="caption">
+            <p-inputgroup styleClass="mb-3">
+              <input pInputText [(ngModel)]="dt_search_value" placeholder="Rechercher..."
+                (input)="role_dt.filterGlobal(dt_search_value, 'contains')" />
+              <p-inputgroup-addon>
+                <p-button icon="pi pi-filter-slash" text severity="secondary"
+                  (onClick)="role_dt.clear(); dt_search_value = '';" size="large" />
+              </p-inputgroup-addon>
+            </p-inputgroup>
+          </ng-template>
+
+          <!-- header template -->
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'id' | uppercase }}
+                  <p-columnFilter type="text" field="User.email" display="menu" matchMode="contains" />
+                </div>
+              </th>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'Libellé' | uppercase }}
+                  <p-columnFilter type="text" field="User.username" display="menu" matchMode="contains" />
+                </div>
+              </th>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'Permissions' | uppercase }}
+                </div>
+              </th>
+              <th style="min-width:5rem">
+                <div class="flex align-items-center">
+                  {{'statut' | uppercase }}
+                  <p-columnFilter field="active" matchMode="equals" display="menu">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-select [options]="[{value: true, label: 'actif'}, {value: false, label: 'inactif'}]"
+                        (onChange)="filter($event.value)" placeholder="Any">
+                        <ng-template let-option pTemplate="item">
+                          <p-tag [value]="option.label" [severity]="option.value ? 'success' : 'danger'"></p-tag>
+                        </ng-template>
+                      </p-select>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <!-- body template -->
+          <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr [pSelectableRow]="item">
+              <td>{{item?.id}}</td>
+              <td>{{item?.label}}</td>
+              <td>{{item?.Scopes?.length}}</td>
+              <td>
+                <p-tag [severity]="item.active ? 'success' : 'danger'" [value]="item?.active ? 'actif' : 'inactif'" />
+              </td>
+            </tr>
+          </ng-template>
+
+          <!-- summary template -->
+          <ng-template pTemplate="summary">
+            <div class="felx justify-content-center">
+              <p-paginator (onPageChange)="onPageChange($event)" [rows]="roleService$.queryParams.pageSize"
+                [totalRecords]="role.total">
+              </p-paginator>
             </div>
-
-            <div>
-                <p-splitbutton label="Nouveau" icon="pi pi-plus" [model]="actions_menu" (onClick)="create()" outlined />
-            </div>
-        </div>
-
-        <p-card>
-            <ng-container *ngIf="roleService$.data$ | async as role">
-                <p-table #role_dt [value]="role.data" selectionMode="single" [loading]="loader_state.list"
-                    [dataKey]="roleService$.identifier" [tableStyle]="{'min-width': '50rem'}"
-                    (onRowSelect)="detail($event)" [globalFilterFields]="['id', 'label', 'active']">
-
-                    <!-- caption template -->
-                    <ng-template pTemplate="caption">
-                        <div class="flex justify-content-between mb-3">
-                            <p-button label="Supprimer le filtre" [outlined]="true" icon="pi pi-filter-slash"
-                                (onClick)="role_dt?.clear()" />
-                            <p-iconfield iconPosition="left" class="ml-auto">
-                                <p-inputicon>
-                                    <i class="pi pi-search"></i>
-                                </p-inputicon>
-                                <input pInputText type="text" [(ngModel)]="dt_search_value"
-                                    (input)="role_dt?.filterGlobal(dt_search_value, 'contains')"
-                                    placeholder="Rechercher" />
-                            </p-iconfield>
-                        </div>
-                    </ng-template>
-
-                    <!-- header template -->
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'id' | uppercase }}
-                                    <p-columnFilter type="text" field="User.email" display="menu"
-                                        matchMode="contains" />
-                                </div>
-                            </th>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'Libellé' | uppercase }}
-                                    <p-columnFilter type="text" field="User.username" display="menu"
-                                        matchMode="contains" />
-                                </div>
-                            </th>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'Permissions' | uppercase }}
-                                </div>
-                            </th>
-                            <th style="min-width:5rem">
-                                <div class="flex align-items-center">
-                                    {{'statut' | uppercase }}
-                                    <p-columnFilter field="active" matchMode="equals" display="menu">
-                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                            <p-select
-                                                [options]="[{value: true, label: 'actif'}, {value: false, label: 'inactif'}]"
-                                                (onChange)="filter($event.value)" placeholder="Any">
-                                                <ng-template let-option pTemplate="item">
-                                                    <p-tag [value]="option.label"
-                                                        [severity]="option.value ? 'success' : 'danger'"></p-tag>
-                                                </ng-template>
-                                            </p-select>
-                                        </ng-template>
-                                    </p-columnFilter>
-                                </div>
-                            </th>
-                        </tr>
-                    </ng-template>
-
-                    <!-- body template -->
-                    <ng-template pTemplate="body" let-item let-index="rowIndex">
-                        <tr [pSelectableRow]="item">
-                            <td>{{item?.id}}</td>
-                            <td>{{item?.label}}</td>
-                            <td>{{item?.Scopes?.length}}</td>
-                            <td>
-                                <p-tag [severity]="item.active ? 'success' : 'danger'"
-                                    [value]="item?.active ? 'actif' : 'inactif'" />
-                            </td>
-                        </tr>
-                    </ng-template>
-
-                    <!-- summary template -->
-                    <ng-template pTemplate="summary">
-                        <div class="felx justify-content-center">
-                            <p-paginator (onPageChange)="onPageChange($event)"
-                                [rows]="roleService$.queryParams.pageSize" [totalRecords]="role.total">
-                            </p-paginator>
-                        </div>
-                    </ng-template>
-                </p-table>
-            </ng-container>
-        </p-card>
-    </ng-container>
+          </ng-template>
+        </p-table>
+      </ng-container>
+    </p-card>
+  </ng-container>
 </div>

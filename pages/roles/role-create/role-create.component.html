@@ -1,46 +1,40 @@
 <div class="px-4">
-    <ng-container *ngIf="roleService$.loadingState$ | async as loader_state">
-        <div class="flex justify-content-between align-items-start">
-            <div>
-                <div class="font-medium text-3xl text-900 mb-3">Rôles</div>
-                <div class="text-500 mb-5">Gérer les rôles de cette application</div>
-            </div>
-
-            <div>
-                <p-button label="Rôles" icon="pi pi-mars" [routerLink]="['/auth', 'manage', 'roles']" outlined />
-            </div>
+  <ng-container *ngIf="roleService$.loadingState$ | async as loader_state">
+    <div class="flex lg:justify-content-between">
+      <div>
+        <div class="flex">
+          <p-button icon="pi pi-arrow-left" styleClass="mr-2" link [routerLink]="['/auth', 'manage', 'roles']" link />
+          <div class="font-medium text-3xl text-900 mb-3">Rôles</div>
         </div>
+        <div class="text-500 mb-5">Remplisseez le formulaire ci-dessous pour ajouter un rôle</div>
+      </div>
 
-        <p-card>
-            <div class="grid formgrid fluid">
-                <p-message *ngIf="success_alert" [life]="3000" severity="success" class="mb-3 w-full"
-                    (onClose)="success_alert = false">Nouveau rôle ajouté à cette application</p-message>
-                <div class="field mb-4 col-12">
-                    <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
-                    </label>
-                    <input id="label" type="text" pInputText [fluid]="true" required="true" [(ngModel)]="role.label"
-                        autofocus>
-                </div>
-                <div class="field mb-4 col-12 md:col-12">
-                    <label for="description" class="font-medium text-900">Description</label>
-                    <textarea id="description" pTextarea rows="5" [autoResize]="true" [(ngModel)]="role.description"
-                        [fluid]="true"></textarea>
-                </div>
-                <div class="field mb-4 col-12 md:col-12" *ngIf="scopeService$.data$ | async as scopes">
-                    <label for="scopes" class="font-medium text-900">Permissions</label>
-                    <p-multiselect inputId="scopes" name="scopeId" [options]="scopes.data" optionLabel="label"
-                        optionValue="id" [filter]="true" filterBy="label" [fluid]="true" [showClear]="true"
-                        [(ngModel)]="role.RoleScopes" appendTo="body" [scrollHeight]="'300px'"
-                        placeholder="Sélectionnez une ou des permissions">
-                    </p-multiselect>
-                </div>
+      <p-button label="Enregistrer" icon="pi pi-save" type="submit" class="w-auto mt-3" [disabled]="!role.label"
+        [loading]="loader_state.create" (click)="save($event)" />
+    </div>
 
-                <div class="surface-border border-top-1 opacity-50 mb-3 col-12"></div>
-                <div class="col-12">
-                    <p-button label="Enregistrer" icon="pi pi-save" type="submit" class="w-auto mt-3"
-                        [disabled]="!role.label" [loading]="loader_state.create" (click)="save($event)" />
-                </div>
-            </div>
-        </p-card>
-    </ng-container>
+    <p-card>
+      <div class="grid formgrid fluid">
+        <p-message *ngIf="success_alert" [life]="3000" severity="success" class="mb-3 w-full"
+          (onClose)="success_alert = false">Nouveau rôle ajouté à cette application</p-message>
+        <div class="field mb-4 col-12">
+          <label for="label" class="font-medium text-900">Libellé<span class="required-field">*</span>
+          </label>
+          <input id="label" type="text" pInputText [fluid]="true" required="true" [(ngModel)]="role.label" autofocus>
+        </div>
+        <div class="field mb-4 col-12 md:col-12">
+          <label for="description" class="font-medium text-900">Description</label>
+          <textarea id="description" pTextarea rows="5" [autoResize]="true" [(ngModel)]="role.description"
+            [fluid]="true"></textarea>
+        </div>
+        <div class="field col-12 md:col-12" *ngIf="scopeService$.data$ | async as scopes">
+          <label for="scopes" class="font-medium text-900">Permissions</label>
+          <p-multiselect inputId="scopes" name="scopeId" [options]="scopes.data" optionLabel="label" optionValue="id"
+            [filter]="true" filterBy="label" [fluid]="true" [showClear]="true" [(ngModel)]="role.RoleScopes"
+            appendTo="body" [scrollHeight]="'300px'" placeholder="Sélectionnez une ou des permissions">
+          </p-multiselect>
+        </div>
+      </div>
+    </p-card>
+  </ng-container>
 </div>

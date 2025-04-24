@@ -39,10 +39,15 @@ import { ScopeCreateComponent } from './pages/scopes/scope-create/scope-create.c
 import { ScopeDetailComponent } from './pages/scopes/scope-detail/scope-detail.component';
 import { ScopeEditComponent } from './pages/scopes/scope-edit/scope-edit.component';
 import { PopoverModule } from 'primeng/popover';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent, RoleListComponent, RoleCreateComponent, RoleDetailComponent, RoleEditComponent, ScopeListComponent, ScopeCreateComponent, ScopeDetailComponent, ScopeEditComponent],
-  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, TextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule, MultiSelectModule, MessageModule, ChipModule, CheckboxModule, PopoverModule],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, TextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule, MultiSelectModule, MessageModule, ChipModule, CheckboxModule, PopoverModule, InputGroupModule, InputGroupAddonModule, MenuModule, MenubarModule, AvatarModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {
