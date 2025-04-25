@@ -44,10 +44,13 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
+import { AccountComponent } from './pages/account/account.component';
+import { PasswordModule } from 'primeng/password';
+import { InputOtpModule } from 'primeng/inputotp';
 
 @NgModule({
-  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent, RoleListComponent, RoleCreateComponent, RoleDetailComponent, RoleEditComponent, ScopeListComponent, ScopeCreateComponent, ScopeDetailComponent, ScopeEditComponent],
-  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, TextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule, MultiSelectModule, MessageModule, ChipModule, CheckboxModule, PopoverModule, InputGroupModule, InputGroupAddonModule, MenuModule, MenubarModule, AvatarModule],
+  declarations: [CallbackComponent, SignOutComponent, UserCreateComponent, UserListComponent, UserEditComponent, UserDetailComponent, LayoutComponent, RoleListComponent, RoleCreateComponent, RoleDetailComponent, RoleEditComponent, ScopeListComponent, ScopeCreateComponent, ScopeDetailComponent, ScopeEditComponent, AccountComponent],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, ProgressSpinnerModule, ButtonModule, TranslateModule, SplitButtonModule, TextareaModule, DividerModule, CardModule, TableModule, InputTextModule, IconFieldModule, InputIconModule, SelectModule, TagModule, PaginatorModule, ToggleSwitchModule, MultiSelectModule, MessageModule, ChipModule, CheckboxModule, PopoverModule, InputGroupModule, InputGroupAddonModule, MenuModule, MenubarModule, AvatarModule, PasswordModule, InputOtpModule],
 })
 export class AuthModule {
   static forRoot(config: AuthConfigType): ModuleWithProviders<AuthModule> {

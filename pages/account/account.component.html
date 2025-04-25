@@ -1,0 +1,177 @@
+<div class="px-2 md:px-3 flex justify-content-around">
+  <div class="layout-container px-3">
+    <div class="p-4">
+      <ng-container *ngIf="authService$.userState$ | async as user">
+        <div class="flex justify-content-between align-items-start">
+          <div>
+            <div class="flex">
+              <p-button icon="pi pi-arrow-left" styleClass="mr-2" link [routerLink]="['/']" link />
+              <div class="font-medium text-3xl text-900 mb-3">Détails utilisateur</div>
+            </div>
+            <div class="text-500 mb-5">Informations complète de l'utilisateur</div>
+          </div>
+        </div>
+
+        <p-card>
+          <div class="grid">
+            <div [class]="user?.profilePictureUrl ? 'col-12 xl:col-3' : 'col-12'"
+              *ngIf="user?.profilePictureUrl as profil_picture">
+              <div class="flex flex-column align-items-center flex-or"
+                *ngIf="user?.profilePictureUrl as profil_picture">
+                <span class="font-medium text-xl text-900 mb-4">PHOTO DE PROFIL</span>
+                <img [src]="profil_picture" class="h-12rem w-12rem" style="border-radius: 50%;" />
+              </div>
+
+            </div>
+            <div [class]="user?.profilePictureUrl ? 'col-12 xl:col-9' : 'col-12'">
+              <!-- IDENTIFICATION -->
+              <div class="mb-5">
+                <div class="mb-3">
+                  <div class="font-medium text-xl text-900">IDENTIFICATION</div>
+                  <small id="created_at">Compte créé le {{user.createdAt | date}}</small>
+                </div>
+                <p-divider type="dashed" />
+                <div class="grid formgrid fluid">
+                  <div class="field mb-4 col-12 md:col-6">
+                    <label for="email" class="font-medium text-900">Email
+                    </label>
+                    <input id="email" type="email" pInputText [fluid]="true" [disabled]="true" [ngModel]="user?.email">
+                  </div>
+                  <div class="field mb-4 col-12 md:col-6">
+                    <label for="username" class="font-medium text-900">Nom d'utilisateur
+                    </label>
+                    <input id="username" type="text" pInputText [fluid]="true" [disabled]="true"
+                      [ngModel]="user?.username">
+                  </div>
+                  <div class="field mb-4 col-12 md:col-12">
+                    <label for="lastname" class="font-medium text-900">Nom
+                      <span class="required-field">*</span>
+                    </label>
+                    <input id="lastname" type="text" pInputText [fluid]="true" [(ngModel)]="user.lastname">
+                  </div>
+                  <div class="field mb-4 col-12 md:col-12">
+                    <label for="firstname" class="font-medium text-900">Prénoms
+                      <span class="required-field">*</span>
+                    </label>
+                    <input id="firstname" type="text" pInputText [fluid]="true" [(ngModel)]="user.firstname">
+                  </div>
+                  <div class="field mb-4 col-12 md:col-12">
+                    <label for="phoneNumber" class="font-medium text-900">Téléphone
+                      <span class="required-field">*</span>
+                    </label>
+                    <input id="phoneNumber" type="text" pInputText [fluid]="true" [(ngModel)]="user.phoneNumber">
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label for="is2faEnabled" class="font-medium text-900">Authentification à deux facteur </label><br>
+                    <p-toggleswitch inputId="is2faEnabled" name="is2faEnabled" [ngModel]="user.is2faEnabled"
+                      (ngModelChange)="on_2fa_enabled_change($event)" />
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label for="isDeveloper" class="font-medium text-900">Mode développeur</label><br>
+                    <p-toggleswitch inputId="isDeveloper" name="isDeveloper" [(ngModel)]="user.isDeveloper"
+                      [disabled]="user.isDeveloper" />
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label for="active" class="font-medium text-900">Statut</label><br>
+                    <p-toggleswitch inputId="active" name="active" [ngModel]="user?.active" [disabled]="true" />
+                  </div>
+                  <div class="field mb-4 col-12 md:col-12" *ngIf="two_fa.token">
+                    <label for="otp" class="font-medium text-900">Code OTP
+                      <span class="required-field">*</span>
+                    </label>
+                    <p-inputotp id="otp" [(ngModel)]="two_fa.otp" [length]="6" autofocus />
+                    <small id="otp">Veuillez saisir le code à usage unique que nous vous avons envoyé par Mail</small>
+
+                  </div>
+                  <div class="field mb-4 col-12 md:col-4">
+                    <p-button [label]="!!two_fa.token ? 'Activer' : 'Mettre à jour'"
+                      [disabled]="!!two_fa.token ? !two_fa.otp : !user.lastname || !user.firstname || !user.phoneNumber"
+                      (onClick)="!!two_fa.token ? activate_2fa_auth() : update_user_informations($event, user)"></p-button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SECURITY -->
+              <div class="font-medium text-xl text-900 mb-3">SÉCURITÉ</div>
+              <p-divider type="dashed" />
+              <div class="grid formgrid fluid">
+                <div class="field mb-4 col-12 md:col-4">
+                  <label for="password" class="font-medium text-900">Ancien mot de passe
+                    <span class="required-field">*</span>
+                  </label>
+                  <br>
+                  <p-password [(ngModel)]="pwd.password" [feedback]="false" toggleMask fluid />
+                </div>
+                <div class="field mb-4 col-12 md:col-4">
+                  <label for="password" class="font-medium text-900">Nouveau mot de passe
+                    <span class="required-field">*</span>
+                  </label>
+                  <br>
+                  <p-password [(ngModel)]="pwd.newPassword" [feedback]="true" toggleMask fluid />
+                  <small id="newPassword" class="required-field"
+                    *ngIf="pwd.password == pwd.newPassword && pwd.password.length">Le nouveau mot
+                    de passe doit être différent de l'actuel</small>
+                </div>
+                <div class="field mb-4 col-12 md:col-4">
+                  <label for="confirm_password" class="font-medium text-900">Confirmer mot de passe
+                    <span class="required-field">*</span>
+                  </label>
+                  <br>
+                  <p-password [(ngModel)]="pwd.confirmPassword" [feedback]="false" toggleMask fluid />
+                </div>
+                <div class="field mb-4 col-12 md:col-4">
+                  <p-button label="Changer mot de passe"
+                    [disabled]="!pwd.password || !(pwd.newPassword == pwd.confirmPassword) || (pwd.password == pwd.newPassword)"
+                    (onClick)="change_password($event)"></p-button>
+                </div>
+              </div>
+
+              <!-- DEVELOPER MODE -->
+              <ng-container *ngIf="user.isDeveloper">
+                <div class="mb-3 mt-5">
+                  <div class="font-medium text-xl text-900">MODE DÉVELOPPEUR</div>
+                  <small id="created_at">Dernière connexion le
+                    {{user.lastActivity | date : 'dd MMM YYYY à HH:mm'}}</small>
+                </div>
+
+                <p-divider type="dashed" />
+                <div class="grid formgrid fluid">
+                  <div class="field mb-4 col-12 md:col-12" *ngIf="user.scopes?.length">
+                    <label for="scopes" class="font-medium text-900">PERMISSIONS
+                    </label>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <p-chip *ngFor="let scope of user.scopes" [label]="scope" />
+                    </div>
+                  </div>
+                  <div class="field mb-4 col-12 md:col-6">
+                    <label for="token" class="font-medium text-900">USER_ID
+                    </label>
+                    <p-inputgroup>
+                      <input pInputText placeholder="token" [value]="user.id" disabled />
+                      <p-inputgroup-addon>
+                        <p-button icon="pi pi-copy" severity="secondary" variant="text"
+                          (click)="copyToClipboard(user.id)" />
+                      </p-inputgroup-addon>
+                    </p-inputgroup>
+                  </div>
+                  <div class="field mb-4 col-12 md:col-6" *ngIf="authService$.signInState$ | async as signInState">
+                    <label for="token" class="font-medium text-900">AUTH_TOKEN
+                    </label>
+                    <p-inputgroup>
+                      <input pInputText placeholder="token" [value]="signInState.authToken" disabled />
+                      <p-inputgroup-addon>
+                        <p-button icon="pi pi-copy" severity="secondary" variant="text"
+                          (click)="copyToClipboard(signInState.authToken)" />
+                      </p-inputgroup-addon>
+                    </p-inputgroup>
+                    <small id="expires_at">Expire le {{signInState.expires_at | date : 'dd MMM YYYY à HH:mm'}}</small>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </p-card>
+      </ng-container>
+    </div>
+  </div>
+</div>

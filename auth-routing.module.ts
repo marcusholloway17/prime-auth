@@ -20,104 +20,109 @@ import { ScopeCreateComponent } from './pages/scopes/scope-create/scope-create.c
 import { ScopeListComponent } from './pages/scopes/scope-list/scope-list.component';
 import { ScopeResolver } from './resolvers/scope.resolver';
 import { HasScopeGuardService } from './guards/has-scope.guard';
+import { AccountComponent } from './pages/account/account.component';
 
 const routes: Routes = [
-    {
-        path: 'callback',
-        component: CallbackComponent,
+  {
+    path: 'callback',
+    component: CallbackComponent,
+  },
+  {
+    path: 'sign-out',
+    component: SignOutComponent,
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
+  },
+  {
+    path: 'manage',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'users',
+        pathMatch: 'full'
+      },
+      // users
+      {
+        path: 'users',
+        component: UserListComponent
+      },
+      {
+        path: 'users/create',
+        component: UserCreateComponent
+      },
+      {
+        path: 'user/:userApplicationRoleId',
+        component: UserDetailComponent,
+        resolve: {
+          userApplicationRole: userApplicationRoleResolver
+        }
+      },
+      {
+        path: 'user/:userApplicationRoleId/edit',
+        component: UserEditComponent,
+        resolve: {
+          userApplicationRole: userApplicationRoleResolver
+        }
+      },
+      // roles
+      {
+        path: 'roles',
+        component: RoleListComponent
+      },
+      {
+        path: 'roles/create',
+        component: RoleCreateComponent
+      },
+      {
+        path: 'role/:id',
+        component: RoleDetailComponent,
+        resolve: {
+          role: RoleResolver
+        }
+      },
+      {
+        path: 'role/:id/edit',
+        component: RoleEditComponent,
+        resolve: {
+          role: RoleResolver
+        }
+      },
+      // scopes
+      {
+        path: 'scopes',
+        component: ScopeListComponent
+      },
+      {
+        path: 'scopes/create',
+        component: ScopeCreateComponent
+      },
+      {
+        path: 'scope/:id',
+        component: ScopeDetailComponent,
+        resolve: {
+          role: ScopeResolver
+        }
+      },
+      {
+        path: 'scope/:id/edit',
+        component: ScopeEditComponent,
+        resolve: {
+          role: ScopeResolver
+        }
+      }
+    ],
+    data: {
+      scopes: ['auth:manage']
     },
-    {
-        path: 'sign-out',
-        component: SignOutComponent,
-    },
-    {
-        path: 'manage',
-        component: LayoutComponent,
-        children: [
-            {
-                path: '',
-                redirectTo: 'users',
-                pathMatch: 'full'
-            },
-            // users
-            {
-                path: 'users',
-                component: UserListComponent
-            },
-            {
-                path: 'users/create',
-                component: UserCreateComponent
-            },
-            {
-                path: 'user/:userApplicationRoleId',
-                component: UserDetailComponent,
-                resolve: {
-                    userApplicationRole: userApplicationRoleResolver
-                }
-            },
-            {
-                path: 'user/:userApplicationRoleId/edit',
-                component: UserEditComponent,
-                resolve: {
-                    userApplicationRole: userApplicationRoleResolver
-                }
-            },
-            // roles
-            {
-                path: 'roles',
-                component: RoleListComponent
-            },
-            {
-                path: 'roles/create',
-                component: RoleCreateComponent
-            },
-            {
-                path: 'role/:id',
-                component: RoleDetailComponent,
-                resolve: {
-                    role: RoleResolver
-                }
-            },
-            {
-                path: 'role/:id/edit',
-                component: RoleEditComponent,
-                resolve: {
-                    role: RoleResolver
-                }
-            },
-            // scopes
-            {
-                path: 'scopes',
-                component: ScopeListComponent
-            },
-            {
-                path: 'scopes/create',
-                component: ScopeCreateComponent
-            },
-            {
-                path: 'scope/:id',
-                component: ScopeDetailComponent,
-                resolve: {
-                    role: ScopeResolver
-                }
-            },
-            {
-                path: 'scope/:id/edit',
-                component: ScopeEditComponent,
-                resolve: {
-                    role: ScopeResolver
-                }
-            }
-        ],
-        data: {
-            scopes: ['auth:manage']
-        },
-        canActivate: [AuthGuardService, HasScopeGuardService]
-    }
+    canActivate: [AuthGuardService, HasScopeGuardService]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AuthRoutingModule { }

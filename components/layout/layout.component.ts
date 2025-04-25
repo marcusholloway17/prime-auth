@@ -31,7 +31,7 @@ export class LayoutComponent {
     {
       label: 'Mon compte',
       icon: 'pi pi-user mr-2',
-      routerLink: ['/auth/profile']
+      routerLink: ['/auth/account']
     },
     {
       label: 'Déconnexion',

@@ -50,7 +50,10 @@ export class AuthService implements OnDestroy {
   public localResetPasswordUrl = `${this.host}/auth/local/reset-password`;
   public localProfilePictureUrl = `${this.host}/api/user/profile-picture`;
   public localProfileUrl = `${this.host}/api/user`;
+  public localChangePassword = `${this.host}/api/user/change-password`;
   public localCallbackUrl = `${this.host}/auth/local/callback`;
+  public local2FaActivationRequest = `${this.host}/auth/local/two-factor/activation-request`;
+  public local2FaActivate = `${this.host}/auth/local/two-factor/activate`;
   // endregion urls
 
   // region client credentials
@@ -151,6 +154,7 @@ export class AuthService implements OnDestroy {
 
   updateUser(data: any) {
     return this.signInState$.pipe(
+      take(1),
       filter((state) => state != null),
       switchMap((state) =>
         this.httpClient
@@ -174,9 +178,86 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  changePassword(data: any) {
+    return this.signInState$.pipe(
+      take(1),
+      filter((state) => state != null || data.password != data.newPassword || data.newPassword == data.confirmPassword),
+      switchMap((state) =>
+        this.httpClient
+          .post(this.localChangePassword, data, {
+            headers: this.headers.set(
+              "Authorization",
+              `Bearer ${state?.authToken as string}`
+            ),
+          })
+          .pipe(
+            catchError((err) => this.handleError(err)),
+            tap(() =>
+              this.messageService.add({
+                severity: "success",
+                detail: this.languageService.instant("app.strings.request-ok"),
+              })
+            )
+          )
+      )
+    );
+  }
+
+  enable_2fa() {
+    return this.signInState$.pipe(
+      take(1),
+      filter((state) => state != null),
+      switchMap((state) =>
+        this.httpClient
+          .get(this.local2FaActivationRequest, {
+            headers: this.headers.set(
+              "Authorization",
+              `Bearer ${state?.authToken as string}`
+            ),
+          })
+          .pipe(
+            catchError((err) => this.handleError(err)),
+            tap(() =>
+              this.messageService.add({
+                severity: "success",
+                detail: this.languageService.instant("app.strings.request-ok"),
+              })
+            )
+          )
+      )
+    );
+  }
+
+  activate_2fa_auth(data: { token: string, otp: string }) {
+    return this.signInState$.pipe(
+      take(1),
+      filter((state) => state != null),
+      switchMap((state) =>
+        this.httpClient
+          .post(this.local2FaActivate, data, {
+            headers: this.headers.set(
+              "Authorization",
+              `Bearer ${state?.authToken as string}`
+            ),
+          })
+          .pipe(
+            catchError((err) => this.handleError(err)),
+            tap(() =>
+              this.messageService.add({
+                severity: "success",
+                detail: this.languageService.instant("app.strings.request-ok"),
+              })
+            ),
+            switchMap(() => this.getUser(state?.authToken))
+          )
+      )
+    );
+  }
+
   updateProfilePicture(profilePictureUrl: string) {
     this.loaderService.load();
     return this.signInState$.pipe(
+      take(1),
       filter((state) => state != null),
       switchMap((state) =>
         this.httpClient
