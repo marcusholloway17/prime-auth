@@ -43,19 +43,19 @@
                     <input id="username" type="text" pInputText [fluid]="true" [disabled]="true"
                       [ngModel]="user?.username">
                   </div>
-                  <div class="field mb-4 col-12 md:col-12">
+                  <div class="field mb-4 col-12 md:col-12" [hidden]="!!two_fa.token">
                     <label for="lastname" class="font-medium text-900">Nom
                       <span class="required-field">*</span>
                     </label>
                     <input id="lastname" type="text" pInputText [fluid]="true" [(ngModel)]="user.lastname">
                   </div>
-                  <div class="field mb-4 col-12 md:col-12">
+                  <div class="field mb-4 col-12 md:col-12" [hidden]="!!two_fa.token">
                     <label for="firstname" class="font-medium text-900">Prénoms
                       <span class="required-field">*</span>
                     </label>
                     <input id="firstname" type="text" pInputText [fluid]="true" [(ngModel)]="user.firstname">
                   </div>
-                  <div class="field mb-4 col-12 md:col-12">
+                  <div class="field mb-4 col-12 md:col-12" [hidden]="!!two_fa.token">
                     <label for="phoneNumber" class="font-medium text-900">Téléphone
                       <span class="required-field">*</span>
                     </label>
@@ -66,12 +66,12 @@
                     <p-toggleswitch inputId="is2faEnabled" name="is2faEnabled" [ngModel]="user.is2faEnabled"
                       (ngModelChange)="on_2fa_enabled_change($event)" />
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-4" *ngIf="!two_fa.token">
                     <label for="isDeveloper" class="font-medium text-900">Mode développeur</label><br>
                     <p-toggleswitch inputId="isDeveloper" name="isDeveloper" [(ngModel)]="user.isDeveloper"
                       [disabled]="user.isDeveloper" />
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-4" *ngIf="!two_fa.token">
                     <label for="active" class="font-medium text-900">Statut</label><br>
                     <p-toggleswitch inputId="active" name="active" [ngModel]="user?.active" [disabled]="true" />
                   </div>

@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject, takeUntil, take, switchMap, tap } from 'rxjs';
+import { Subject, takeUntil, take, switchMap, tap, forkJoin } from 'rxjs';
 import { RoleService } from '../../services/role.service';
 import { AUTH_SERVICE } from '../../types';
 import { AuthService } from '../../services/auth.service';
@@ -30,7 +29,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(AUTH_SERVICE) public authService$: AuthService,
     public roleService$: RoleService,
-    private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) { }
@@ -40,6 +38,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   load_select_data() {
+    this.authService$.getUser().pipe(take(1)).subscribe();
     this.roleService$.list({ page: undefined, pageSize: undefined, _query: {} }).pipe(takeUntil(this.destroy$), take(1)).subscribe();
   }
 
@@ -157,6 +156,11 @@ export class AccountComponent implements OnInit, OnDestroy {
             take(1)
           ).subscribe();
         },
+        reject: () => {
+          this.authService$.getUser().pipe(
+            take(1),
+          ).subscribe();
+        }
       });
     }
   }

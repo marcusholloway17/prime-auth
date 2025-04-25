@@ -172,7 +172,7 @@ export class AuthService implements OnDestroy {
                 detail: this.languageService.instant("app.strings.request-ok"),
               })
             ),
-            switchMap(() => this.getUser(state?.authToken))
+            switchMap(() => this.getUser())
           )
       )
     );
@@ -248,7 +248,7 @@ export class AuthService implements OnDestroy {
                 detail: this.languageService.instant("app.strings.request-ok"),
               })
             ),
-            switchMap(() => this.getUser(state?.authToken))
+            switchMap(() => this.getUser())
           )
       )
     );
@@ -280,25 +280,31 @@ export class AuthService implements OnDestroy {
             }),
             tap(() => this.loaderService.load(false)),
             // refresh user state
-            switchMap(() => this.getUser(state?.authToken))
+            switchMap(() => this.getUser())
           )
       )
     );
   }
 
-  getUser(authToken: string = this._getSignInState()?.authToken) {
-    return this.httpClient
-      .get<UserStateType>(this.localProfileUrl, {
-        headers: this.headers.set("Authorization", `Bearer ${authToken}`),
-      })
-      .pipe(
-        catchError((err) => {
-          return this.handleError(err);
-        }),
-        tap((response) => {
-          this.setUserState(response);
-        })
-      );
+  getUser() {
+    return this.signInState$.pipe(
+      take(1),
+      filter((state) => state != null),
+      switchMap((state) =>
+        this.httpClient
+          .get<UserStateType>(this.localProfileUrl, {
+            headers: this.headers.set("Authorization", `Bearer ${state?.authToken as string}`),
+          })
+          .pipe(
+            catchError((err) => {
+              return this.handleError(err);
+            }),
+            tap((response) => {
+              this.setUserState(response);
+            })
+          )
+      )
+    );
   }
 
   callback(authToken: string) {
@@ -313,7 +319,7 @@ export class AuthService implements OnDestroy {
         catchError((err) => this.handleError(err)),
         tap((response) => {
           this.setSignInState(response);
-          this.getUser(authToken);
+          this.getUser();
         })
       );
   }

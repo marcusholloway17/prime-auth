@@ -26,7 +26,7 @@ export class CallbackComponent implements OnInit, OnDestroy {
     @Inject(AUTH_SERVICE) private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.callback();
@@ -52,7 +52,7 @@ export class CallbackComponent implements OnInit, OnDestroy {
             }),
             filter((state) => (state && state?.authToken ? true : false)),
             switchMap((state) =>
-              this.authService.getUser(state?.authToken).pipe(
+              this.authService.getUser().pipe(
                 tap(() => {
                   this.router.navigateByUrl('/');
                 })
