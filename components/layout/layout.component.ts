@@ -5,9 +5,10 @@ import { AUTH_SERVICE } from '../../types';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+    selector: 'app-layout',
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.css',
+    standalone: false
 })
 export class LayoutComponent {
   public menuBar: MenuItem[] = [

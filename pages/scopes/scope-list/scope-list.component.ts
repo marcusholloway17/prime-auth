@@ -5,9 +5,10 @@ import { ScopeService } from '../../../services/scope.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-scope-list',
-  templateUrl: './scope-list.component.html',
-  styleUrl: './scope-list.component.css'
+    selector: 'app-scope-list',
+    templateUrl: './scope-list.component.html',
+    styleUrl: './scope-list.component.css',
+    standalone: false
 })
 export class ScopeListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

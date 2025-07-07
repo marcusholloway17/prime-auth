@@ -4,9 +4,10 @@ import { Subject, catchError, take, takeUntil, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-sign-out',
-  templateUrl: './sign-out.component.html',
-  styleUrls: ['./sign-out.component.css'],
+    selector: 'app-sign-out',
+    templateUrl: './sign-out.component.html',
+    styleUrls: ['./sign-out.component.css'],
+    standalone: false
 })
 export class SignOutComponent {
   private destroy$ = new Subject<void>();

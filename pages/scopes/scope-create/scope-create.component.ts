@@ -5,9 +5,10 @@ import { Subject, takeUntil, tap, catchError, throwError, take } from 'rxjs';
 import { ScopeType } from '../../../types';
 
 @Component({
-  selector: 'app-scope-create',
-  templateUrl: './scope-create.component.html',
-  styleUrl: './scope-create.component.css'
+    selector: 'app-scope-create',
+    templateUrl: './scope-create.component.html',
+    styleUrl: './scope-create.component.css',
+    standalone: false
 })
 export class ScopeCreateComponent implements OnDestroy {
   private destroy$ = new Subject<void>();

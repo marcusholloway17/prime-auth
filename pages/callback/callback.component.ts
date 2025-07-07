@@ -14,9 +14,10 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-callback',
-  templateUrl: './callback.component.html',
-  styleUrls: ['./callback.component.css'],
+    selector: 'app-callback',
+    templateUrl: './callback.component.html',
+    styleUrls: ['./callback.component.css'],
+    standalone: false
 })
 export class CallbackComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

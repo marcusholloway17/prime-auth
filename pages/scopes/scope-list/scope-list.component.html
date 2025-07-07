@@ -13,8 +13,8 @@
       <ng-container *ngIf="scopeService$.data$ | async as scope">
         <p-table #scope_dt [value]="scope.data" selectionMode="single" [loading]="loader_state.list"
           [dataKey]="scopeService$.identifier" [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
-          [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollDirection]="'both'"
-          scrollHeight="flex" stateKey="scopes" stateStorage="session">
+          [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollHeight]="'flex'"
+          stateKey="scopes" stateStorage="session">
 
           <!-- caption template -->
           <ng-template pTemplate="caption">

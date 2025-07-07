@@ -6,9 +6,10 @@ import { UserApplicationRoleType } from '../../../types';
 import { RoleService } from '../../../services/role.service';
 
 @Component({
-  selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.css'
+    selector: 'app-user-detail',
+    templateUrl: './user-detail.component.html',
+    styleUrl: './user-detail.component.css',
+    standalone: false
 })
 export class UserDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

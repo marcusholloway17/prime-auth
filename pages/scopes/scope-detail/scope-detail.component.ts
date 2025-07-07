@@ -6,9 +6,10 @@ import { ScopeService } from '../../../services/scope.service';
 import { ScopeType } from '../../../types';
 
 @Component({
-  selector: 'app-scope-detail',
-  templateUrl: './scope-detail.component.html',
-  styleUrl: './scope-detail.component.css'
+    selector: 'app-scope-detail',
+    templateUrl: './scope-detail.component.html',
+    styleUrl: './scope-detail.component.css',
+    standalone: false
 })
 export class ScopeDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

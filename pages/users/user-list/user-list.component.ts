@@ -6,9 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css'
+    selector: 'app-user-list',
+    templateUrl: './user-list.component.html',
+    styleUrl: './user-list.component.css',
+    standalone: false
 })
 export class UserListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

@@ -5,9 +5,10 @@ import { RoleService } from '../../../services/role.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-role-list',
-  templateUrl: './role-list.component.html',
-  styleUrl: './role-list.component.css'
+    selector: 'app-role-list',
+    templateUrl: './role-list.component.html',
+    styleUrl: './role-list.component.css',
+    standalone: false
 })
 export class RoleListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

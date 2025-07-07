@@ -6,9 +6,10 @@ import { ScopeType } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-scope-edit',
-  templateUrl: './scope-edit.component.html',
-  styleUrl: './scope-edit.component.css'
+    selector: 'app-scope-edit',
+    templateUrl: './scope-edit.component.html',
+    styleUrl: './scope-edit.component.css',
+    standalone: false
 })
 export class ScopeEditComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject<void>();

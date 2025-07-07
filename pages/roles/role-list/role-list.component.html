@@ -13,8 +13,8 @@
       <ng-container *ngIf="roleService$.data$ | async as role">
         <p-table #role_dt [value]="role.data" selectionMode="single" [loading]="loader_state.list"
           [dataKey]="roleService$.identifier" [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
-          [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollDirection]="'both'"
-          scrollHeight="flex" stateKey="roles" stateStorage="session">
+          [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollHeight]="'flex'"
+          stateKey="roles" stateStorage="session">
 
           <!-- caption template -->
           <ng-template pTemplate="caption">

@@ -9,9 +9,10 @@ import { Popover } from 'primeng/popover';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-role-edit',
-  templateUrl: './role-edit.component.html',
-  styleUrl: './role-edit.component.css'
+    selector: 'app-role-edit',
+    templateUrl: './role-edit.component.html',
+    styleUrl: './role-edit.component.css',
+    standalone: false
 })
 export class RoleEditComponent {
   private destroy$ = new Subject<void>();

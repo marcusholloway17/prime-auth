@@ -7,9 +7,10 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-role-detail',
-  templateUrl: './role-detail.component.html',
-  styleUrl: './role-detail.component.css'
+    selector: 'app-role-detail',
+    templateUrl: './role-detail.component.html',
+    styleUrl: './role-detail.component.css',
+    standalone: false
 })
 export class RoleDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

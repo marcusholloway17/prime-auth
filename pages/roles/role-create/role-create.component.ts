@@ -6,9 +6,10 @@ import { RoleType } from '../../../types';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-role-create',
-  templateUrl: './role-create.component.html',
-  styleUrl: './role-create.component.css'
+    selector: 'app-role-create',
+    templateUrl: './role-create.component.html',
+    styleUrl: './role-create.component.css',
+    standalone: false
 })
 export class RoleCreateComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
