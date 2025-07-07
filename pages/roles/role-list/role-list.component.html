@@ -14,7 +14,7 @@
         <p-table #role_dt [value]="role.data" selectionMode="single" [loading]="loader_state.list"
           [dataKey]="roleService$.identifier" [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
           [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollDirection]="'both'"
-          [scrollHeight]="'65vh'" stateKey="roles" stateStorage="session">
+          scrollHeight="flex" stateKey="roles" stateStorage="session">
 
           <!-- caption template -->
           <ng-template pTemplate="caption">

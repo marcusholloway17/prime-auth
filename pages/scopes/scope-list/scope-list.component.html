@@ -14,7 +14,7 @@
         <p-table #scope_dt [value]="scope.data" selectionMode="single" [loading]="loader_state.list"
           [dataKey]="scopeService$.identifier" [tableStyle]="{'min-width': '50rem'}" (onRowSelect)="detail($event)"
           [globalFilterFields]="['id', 'label', 'active']" stripedRows [scrollable]="true" [scrollDirection]="'both'"
-          [scrollHeight]="'65vh'" stateKey="scopes" stateStorage="session">
+          scrollHeight="flex" stateKey="scopes" stateStorage="session">
 
           <!-- caption template -->
           <ng-template pTemplate="caption">
