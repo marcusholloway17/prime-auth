@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ScopeService } from '../../../services/scope.service';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subject, takeUntil, tap, catchError, throwError, take } from 'rxjs';
 import { ScopeType } from '../../../types';
 
@@ -13,10 +13,8 @@ import { ScopeType } from '../../../types';
 export class ScopeCreateComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
   public scope: Partial<ScopeType> = {};
-  public success_alert: boolean = false;
 
-
-  constructor(public scopeService$: ScopeService, private confirmationService: ConfirmationService) { }
+  constructor(public scopeService$: ScopeService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -47,8 +45,14 @@ export class ScopeCreateComponent implements OnDestroy {
           catchError((err) => {
             return throwError(() => err)
           }), tap((response) => {
-            this.success_alert = true;
-            this.scope = {}
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Enregistrement réussi',
+              detail: `Le scope ${this.scope.label} a été enregistré avec succès.`,
+            });
+            for (let key in this.scope) {
+              this.scope[key as keyof ScopeType] = '' as any;
+            }
           })).subscribe();
       },
       reject: () => { },

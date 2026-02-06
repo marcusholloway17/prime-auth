@@ -3,23 +3,22 @@ import { catchError, filter, forkJoin, of, Subject, switchMap, take, takeUntil, 
 import { RoleScopeType, RoleType, ScopeType } from '../../../types';
 import { ScopeService } from '../../../services/scope.service';
 import { RoleService } from '../../../services/role.service';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { RoleScopeService } from '../../../services/role-scope.service';
 import { Popover } from 'primeng/popover';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-role-edit',
-    templateUrl: './role-edit.component.html',
-    styleUrl: './role-edit.component.css',
-    standalone: false
+  selector: 'app-role-edit',
+  templateUrl: './role-edit.component.html',
+  styleUrl: './role-edit.component.css',
+  standalone: false
 })
 export class RoleEditComponent {
   private destroy$ = new Subject<void>();
   public role: Partial<RoleType> = {};
   public available_scopes: ScopeType[] = [];
   public selected_scopes: ScopeType[] = [];
-  public success_alert: boolean = false;
 
   // popover
   @ViewChild('op', { static: false }) op!: Popover;
@@ -30,7 +29,8 @@ export class RoleEditComponent {
     public roleService$: RoleService,
     private roleScopeService$: RoleScopeService,
     private confirmationService: ConfirmationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -77,8 +77,11 @@ export class RoleEditComponent {
             catchError((err) => {
               return throwError(() => err)
             }), tap((response) => {
-              this.success_alert = true;
-              this.role = {}
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Enregistrement réussi',
+                detail: `Le rôle ${this.role.label} a été enregistré avec succès.`,
+              });
             })).subscribe();
       },
       reject: () => { },

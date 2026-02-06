@@ -1,26 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subject, takeUntil, tap, take, switchMap } from 'rxjs';
 import { ScopeService } from '../../../services/scope.service';
 import { ScopeType } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-scope-edit',
-    templateUrl: './scope-edit.component.html',
-    styleUrl: './scope-edit.component.css',
-    standalone: false
+  selector: 'app-scope-edit',
+  templateUrl: './scope-edit.component.html',
+  styleUrl: './scope-edit.component.css',
+  standalone: false
 })
 export class ScopeEditComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject<void>();
   public scope: Partial<ScopeType> = {};
-  public success_alert: boolean = false;
-
 
   constructor(
     public scopeService$: ScopeService,
     private confirmationService: ConfirmationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +54,11 @@ export class ScopeEditComponent implements OnDestroy, OnInit {
               .pipe(takeUntil(this.destroy$),
                 take(1),
                 tap((response) => {
-                  this.success_alert = true;
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Enregistrement réussi',
+                    detail: `Le scope ${this.scope.label} a été mis à jour avec succès.`,
+                  });
                 }),
                 switchMap(() => this.scopeService$.refresh_active_data().pipe(takeUntil(this.destroy$), take(1))))
               .subscribe()

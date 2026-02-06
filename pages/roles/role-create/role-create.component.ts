@@ -3,21 +3,19 @@ import { catchError, Subject, take, takeUntil, tap, throwError } from 'rxjs';
 import { ScopeService } from '../../../services/scope.service';
 import { RoleService } from '../../../services/role.service';
 import { RoleType } from '../../../types';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-    selector: 'app-role-create',
-    templateUrl: './role-create.component.html',
-    styleUrl: './role-create.component.css',
-    standalone: false
+  selector: 'app-role-create',
+  templateUrl: './role-create.component.html',
+  styleUrl: './role-create.component.css',
+  standalone: false
 })
 export class RoleCreateComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public role: Partial<RoleType> = {};
-  public success_alert: boolean = false;
 
-
-  constructor(public scopeService$: ScopeService, public roleService$: RoleService, private confirmationService: ConfirmationService,) { }
+  constructor(public scopeService$: ScopeService, public roleService$: RoleService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.load_select_data();
@@ -67,8 +65,14 @@ export class RoleCreateComponent implements OnInit, OnDestroy {
           catchError((err) => {
             return throwError(() => err)
           }), tap((response) => {
-            this.success_alert = true;
-            this.role = {}
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Enregistrement réussi',
+              detail: `Le rôle ${this.role.label} a été enregistré avec succès.`,
+            });
+            for (let key in this.role) {
+              this.role[key as keyof RoleType] = '' as any;
+            }
           })).subscribe();
       },
       reject: () => { },
